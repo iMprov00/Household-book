@@ -143,10 +143,10 @@ namespace Household_book
                           "Успешно",
                           MessageBoxIcon.Information);
 
-                // Здесь открываем главную форму
-                //MainForm mainForm = new MainForm();
-                //mainForm.Show();
-                //this.Hide();
+                
+                Main mainForm = new Main();
+                mainForm.Show();
+                this.Hide();
             }
             else
             {

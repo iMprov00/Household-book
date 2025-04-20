@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Household_book
+{
+    public partial class Main : Form
+    {
+        public Main()
+        {
+            InitializeComponent();
+            this.FormBorderStyle = FormBorderStyle.None;
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuFormControlBox1_HelpClicked(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
