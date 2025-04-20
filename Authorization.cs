@@ -27,7 +27,54 @@ namespace Household_book
         {
             this.FormBorderStyle = FormBorderStyle.None;
             InitializeComponent();
+            Database.Initialize();
 
+        }
+
+        public static class Database
+        {
+            private static string DatabaseFile = "household_book.db";
+            private static string ConnectionString => $"Data Source={DatabaseFile};Version=3;";
+
+            public static void Initialize()
+            {
+                if (!File.Exists(DatabaseFile))
+                {
+                    SQLiteConnection.CreateFile(DatabaseFile);
+
+                    using (var connection = new SQLiteConnection(ConnectionString))
+                    {
+                        connection.Execute(@"
+                        CREATE TABLE IF NOT EXISTS Users (
+                            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            Name TEXT NOT NULL,
+                            Login TEXT NOT NULL UNIQUE,
+                            Pass TEXT NOT NULL
+                        );
+                    ");
+                    }
+                }
+            }
+
+            public static bool ValidateUser(string login, string password)
+            {
+                using (var connection = new SQLiteConnection(ConnectionString))
+                {
+                    var user = connection.QueryFirstOrDefault<User>(
+                        "SELECT * FROM Users WHERE Login = @Login AND Pass = @Pass",
+                        new { Login = login, Pass = password });
+
+                    return user != null;
+                }
+            }
+
+            public class User
+            {
+                public int Id { get; set; }
+                public string Name { get; set; }
+                public string Login { get; set; }
+                public string Pass { get; set; }
+            }
         }
 
         private void bunifuTextBox1_TextChanged(object sender, EventArgs e)
@@ -84,30 +131,34 @@ namespace Household_book
 
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(pass))
             {
-                MessageBox.Show(
-                    "Пожалуйста, введите логин и пароль!",  // Текст сообщения
-                    "Ошибка ввода",                         // Заголовок окна
-                    MessageBoxButtons.OK,                   // Кнопка "OK"
-                    MessageBoxIcon.Warning                 // Иконка предупреждения
-                );
+                ShowMessage("Пожалуйста, введите логин и пароль!",
+                          "Ошибка ввода",
+                          MessageBoxIcon.Warning);
                 return;
             }
 
-            if (login != "1" || pass != "11")
+            if (Database.ValidateUser(login, pass))
             {
-                MessageBox.Show(
-                    "Неверный логин или пароль!",  // Текст сообщения
-                    "Ошибка ввода",                         // Заголовок окна
-                    MessageBoxButtons.OK,                   // Кнопка "OK"
-                    MessageBoxIcon.Warning                 // Иконка предупреждения
-                );
+                ShowMessage("Авторизация успешна!",
+                          "Успешно",
+                          MessageBoxIcon.Information);
+
+                // Здесь открываем главную форму
+                //MainForm mainForm = new MainForm();
+                //mainForm.Show();
+                //this.Hide();
             }
             else
             {
-
-                this.Close();
+                ShowMessage("Неверный логин или пароль!",
+                          "Ошибка авторизации",
+                          MessageBoxIcon.Error);
             }
-            
+        }
+
+        private void ShowMessage(string text, string caption, MessageBoxIcon icon)
+        {
+            MessageBox.Show(text, caption, MessageBoxButtons.OK, icon);
         }
     }
 }
