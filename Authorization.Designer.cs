@@ -38,21 +38,124 @@
             Bunifu.UI.WinForms.BunifuTextBox.StateProperties stateProperties6 = new Bunifu.UI.WinForms.BunifuTextBox.StateProperties();
             Bunifu.UI.WinForms.BunifuTextBox.StateProperties stateProperties7 = new Bunifu.UI.WinForms.BunifuTextBox.StateProperties();
             Bunifu.UI.WinForms.BunifuTextBox.StateProperties stateProperties8 = new Bunifu.UI.WinForms.BunifuTextBox.StateProperties();
+            this.bunifuLabel2 = new Bunifu.UI.WinForms.BunifuLabel();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.bunifuFormControlBox1 = new Bunifu.UI.WinForms.BunifuFormControlBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.button_go = new Bunifu.UI.WinForms.BunifuButton.BunifuButton2();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.text_pass = new Bunifu.UI.WinForms.BunifuTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.text_login = new Bunifu.UI.WinForms.BunifuTextBox();
-            this.bunifuLabel2 = new Bunifu.UI.WinForms.BunifuLabel();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.bunifuFormControlBox1 = new Bunifu.UI.WinForms.BunifuFormControlBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
+            // 
+            // bunifuLabel2
+            // 
+            this.bunifuLabel2.AllowParentOverrides = false;
+            this.bunifuLabel2.AutoEllipsis = false;
+            this.bunifuLabel2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.bunifuLabel2.CursorType = System.Windows.Forms.Cursors.Default;
+            this.bunifuLabel2.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold);
+            this.bunifuLabel2.Location = new System.Drawing.Point(147, 34);
+            this.bunifuLabel2.Name = "bunifuLabel2";
+            this.bunifuLabel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.bunifuLabel2.Size = new System.Drawing.Size(252, 78);
+            this.bunifuLabel2.TabIndex = 9;
+            this.bunifuLabel2.Text = "Хозяйственная \r\nкнига\r\n";
+            this.bunifuLabel2.TextAlignment = System.Drawing.ContentAlignment.TopCenter;
+            this.bunifuLabel2.TextFormat = Bunifu.UI.WinForms.BunifuLabel.TextFormattingOptions.Default;
+            this.bunifuLabel2.Click += new System.EventHandler(this.bunifuLabel2_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.Color.PapayaWhip;
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(429, 24);
+            this.menuStrip1.TabIndex = 10;
+            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.menuStrip1_MouseDown);
+            this.menuStrip1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.menuStrip1_MouseMove);
+            this.menuStrip1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.menuStrip1_MouseUp);
+            // 
+            // bunifuFormControlBox1
+            // 
+            this.bunifuFormControlBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bunifuFormControlBox1.BackColor = System.Drawing.Color.PapayaWhip;
+            this.bunifuFormControlBox1.BunifuFormDrag = null;
+            this.bunifuFormControlBox1.CloseBoxOptions.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuFormControlBox1.CloseBoxOptions.BorderRadius = 0;
+            this.bunifuFormControlBox1.CloseBoxOptions.Enabled = true;
+            this.bunifuFormControlBox1.CloseBoxOptions.EnableDefaultAction = true;
+            this.bunifuFormControlBox1.CloseBoxOptions.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
+            this.bunifuFormControlBox1.CloseBoxOptions.Icon = ((System.Drawing.Image)(resources.GetObject("bunifuFormControlBox1.CloseBoxOptions.Icon")));
+            this.bunifuFormControlBox1.CloseBoxOptions.IconAlt = null;
+            this.bunifuFormControlBox1.CloseBoxOptions.IconColor = System.Drawing.Color.Black;
+            this.bunifuFormControlBox1.CloseBoxOptions.IconHoverColor = System.Drawing.Color.Transparent;
+            this.bunifuFormControlBox1.CloseBoxOptions.IconPressedColor = System.Drawing.Color.Transparent;
+            this.bunifuFormControlBox1.CloseBoxOptions.IconSize = new System.Drawing.Size(18, 18);
+            this.bunifuFormControlBox1.CloseBoxOptions.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
+            this.bunifuFormControlBox1.HelpBox = false;
+            this.bunifuFormControlBox1.HelpBoxOptions.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuFormControlBox1.HelpBoxOptions.BorderRadius = 0;
+            this.bunifuFormControlBox1.HelpBoxOptions.Enabled = true;
+            this.bunifuFormControlBox1.HelpBoxOptions.EnableDefaultAction = true;
+            this.bunifuFormControlBox1.HelpBoxOptions.HoverColor = System.Drawing.Color.LightGray;
+            this.bunifuFormControlBox1.HelpBoxOptions.Icon = ((System.Drawing.Image)(resources.GetObject("bunifuFormControlBox1.HelpBoxOptions.Icon")));
+            this.bunifuFormControlBox1.HelpBoxOptions.IconAlt = null;
+            this.bunifuFormControlBox1.HelpBoxOptions.IconColor = System.Drawing.Color.Black;
+            this.bunifuFormControlBox1.HelpBoxOptions.IconHoverColor = System.Drawing.Color.Black;
+            this.bunifuFormControlBox1.HelpBoxOptions.IconPressedColor = System.Drawing.Color.Black;
+            this.bunifuFormControlBox1.HelpBoxOptions.IconSize = new System.Drawing.Size(22, 22);
+            this.bunifuFormControlBox1.HelpBoxOptions.PressedColor = System.Drawing.Color.Silver;
+            this.bunifuFormControlBox1.Location = new System.Drawing.Point(327, 0);
+            this.bunifuFormControlBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bunifuFormControlBox1.MaximizeBox = false;
+            this.bunifuFormControlBox1.MaximizeBoxOptions.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuFormControlBox1.MaximizeBoxOptions.BorderRadius = 0;
+            this.bunifuFormControlBox1.MaximizeBoxOptions.Enabled = true;
+            this.bunifuFormControlBox1.MaximizeBoxOptions.EnableDefaultAction = true;
+            this.bunifuFormControlBox1.MaximizeBoxOptions.HoverColor = System.Drawing.Color.LightGray;
+            this.bunifuFormControlBox1.MaximizeBoxOptions.Icon = ((System.Drawing.Image)(resources.GetObject("bunifuFormControlBox1.MaximizeBoxOptions.Icon")));
+            this.bunifuFormControlBox1.MaximizeBoxOptions.IconAlt = ((System.Drawing.Image)(resources.GetObject("bunifuFormControlBox1.MaximizeBoxOptions.IconAlt")));
+            this.bunifuFormControlBox1.MaximizeBoxOptions.IconColor = System.Drawing.Color.Black;
+            this.bunifuFormControlBox1.MaximizeBoxOptions.IconHoverColor = System.Drawing.Color.Black;
+            this.bunifuFormControlBox1.MaximizeBoxOptions.IconPressedColor = System.Drawing.Color.Black;
+            this.bunifuFormControlBox1.MaximizeBoxOptions.IconSize = new System.Drawing.Size(16, 16);
+            this.bunifuFormControlBox1.MaximizeBoxOptions.PressedColor = System.Drawing.Color.Silver;
+            this.bunifuFormControlBox1.MinimizeBox = true;
+            this.bunifuFormControlBox1.MinimizeBoxOptions.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuFormControlBox1.MinimizeBoxOptions.BorderRadius = 0;
+            this.bunifuFormControlBox1.MinimizeBoxOptions.Enabled = true;
+            this.bunifuFormControlBox1.MinimizeBoxOptions.EnableDefaultAction = true;
+            this.bunifuFormControlBox1.MinimizeBoxOptions.HoverColor = System.Drawing.Color.LightGray;
+            this.bunifuFormControlBox1.MinimizeBoxOptions.Icon = ((System.Drawing.Image)(resources.GetObject("bunifuFormControlBox1.MinimizeBoxOptions.Icon")));
+            this.bunifuFormControlBox1.MinimizeBoxOptions.IconAlt = null;
+            this.bunifuFormControlBox1.MinimizeBoxOptions.IconColor = System.Drawing.Color.Black;
+            this.bunifuFormControlBox1.MinimizeBoxOptions.IconHoverColor = System.Drawing.Color.Black;
+            this.bunifuFormControlBox1.MinimizeBoxOptions.IconPressedColor = System.Drawing.Color.Black;
+            this.bunifuFormControlBox1.MinimizeBoxOptions.IconSize = new System.Drawing.Size(14, 14);
+            this.bunifuFormControlBox1.MinimizeBoxOptions.PressedColor = System.Drawing.Color.Silver;
+            this.bunifuFormControlBox1.Name = "bunifuFormControlBox1";
+            this.bunifuFormControlBox1.ShowDesignBorders = false;
+            this.bunifuFormControlBox1.Size = new System.Drawing.Size(102, 24);
+            this.bunifuFormControlBox1.TabIndex = 11;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackColor = System.Drawing.Color.PapayaWhip;
+            this.pictureBox4.Image = global::Household_book.Properties.Resources.logo;
+            this.pictureBox4.Location = new System.Drawing.Point(6, 2);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(33, 20);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox4.TabIndex = 12;
+            this.pictureBox4.TabStop = false;
             // 
             // pictureBox3
             // 
@@ -111,7 +214,7 @@
             this.button_go.IdleIconLeftImage = null;
             this.button_go.IdleIconRightImage = null;
             this.button_go.IndicateFocus = false;
-            this.button_go.Location = new System.Drawing.Point(147, 283);
+            this.button_go.Location = new System.Drawing.Point(147, 284);
             this.button_go.Name = "button_go";
             this.button_go.OnDisabledState.BorderColor = System.Drawing.Color.Gainsboro;
             this.button_go.OnDisabledState.BorderRadius = 30;
@@ -327,109 +430,6 @@
             this.text_login.UseSystemPasswordChar = false;
             this.text_login.WordWrap = true;
             // 
-            // bunifuLabel2
-            // 
-            this.bunifuLabel2.AllowParentOverrides = false;
-            this.bunifuLabel2.AutoEllipsis = false;
-            this.bunifuLabel2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.bunifuLabel2.CursorType = System.Windows.Forms.Cursors.Default;
-            this.bunifuLabel2.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold);
-            this.bunifuLabel2.Location = new System.Drawing.Point(147, 34);
-            this.bunifuLabel2.Name = "bunifuLabel2";
-            this.bunifuLabel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.bunifuLabel2.Size = new System.Drawing.Size(252, 78);
-            this.bunifuLabel2.TabIndex = 9;
-            this.bunifuLabel2.Text = "Хозяйственная \r\nкнига\r\n";
-            this.bunifuLabel2.TextAlignment = System.Drawing.ContentAlignment.TopCenter;
-            this.bunifuLabel2.TextFormat = Bunifu.UI.WinForms.BunifuLabel.TextFormattingOptions.Default;
-            this.bunifuLabel2.Click += new System.EventHandler(this.bunifuLabel2_Click);
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.BackColor = System.Drawing.Color.PapayaWhip;
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(429, 24);
-            this.menuStrip1.TabIndex = 10;
-            this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.menuStrip1_MouseDown);
-            this.menuStrip1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.menuStrip1_MouseMove);
-            this.menuStrip1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.menuStrip1_MouseUp);
-            // 
-            // bunifuFormControlBox1
-            // 
-            this.bunifuFormControlBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bunifuFormControlBox1.BackColor = System.Drawing.Color.PapayaWhip;
-            this.bunifuFormControlBox1.BunifuFormDrag = null;
-            this.bunifuFormControlBox1.CloseBoxOptions.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuFormControlBox1.CloseBoxOptions.BorderRadius = 0;
-            this.bunifuFormControlBox1.CloseBoxOptions.Enabled = true;
-            this.bunifuFormControlBox1.CloseBoxOptions.EnableDefaultAction = true;
-            this.bunifuFormControlBox1.CloseBoxOptions.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
-            this.bunifuFormControlBox1.CloseBoxOptions.Icon = ((System.Drawing.Image)(resources.GetObject("bunifuFormControlBox1.CloseBoxOptions.Icon")));
-            this.bunifuFormControlBox1.CloseBoxOptions.IconAlt = null;
-            this.bunifuFormControlBox1.CloseBoxOptions.IconColor = System.Drawing.Color.Black;
-            this.bunifuFormControlBox1.CloseBoxOptions.IconHoverColor = System.Drawing.Color.Transparent;
-            this.bunifuFormControlBox1.CloseBoxOptions.IconPressedColor = System.Drawing.Color.Transparent;
-            this.bunifuFormControlBox1.CloseBoxOptions.IconSize = new System.Drawing.Size(18, 18);
-            this.bunifuFormControlBox1.CloseBoxOptions.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
-            this.bunifuFormControlBox1.HelpBox = false;
-            this.bunifuFormControlBox1.HelpBoxOptions.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuFormControlBox1.HelpBoxOptions.BorderRadius = 0;
-            this.bunifuFormControlBox1.HelpBoxOptions.Enabled = true;
-            this.bunifuFormControlBox1.HelpBoxOptions.EnableDefaultAction = true;
-            this.bunifuFormControlBox1.HelpBoxOptions.HoverColor = System.Drawing.Color.LightGray;
-            this.bunifuFormControlBox1.HelpBoxOptions.Icon = ((System.Drawing.Image)(resources.GetObject("bunifuFormControlBox1.HelpBoxOptions.Icon")));
-            this.bunifuFormControlBox1.HelpBoxOptions.IconAlt = null;
-            this.bunifuFormControlBox1.HelpBoxOptions.IconColor = System.Drawing.Color.Black;
-            this.bunifuFormControlBox1.HelpBoxOptions.IconHoverColor = System.Drawing.Color.Black;
-            this.bunifuFormControlBox1.HelpBoxOptions.IconPressedColor = System.Drawing.Color.Black;
-            this.bunifuFormControlBox1.HelpBoxOptions.IconSize = new System.Drawing.Size(22, 22);
-            this.bunifuFormControlBox1.HelpBoxOptions.PressedColor = System.Drawing.Color.Silver;
-            this.bunifuFormControlBox1.Location = new System.Drawing.Point(327, 0);
-            this.bunifuFormControlBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.bunifuFormControlBox1.MaximizeBox = false;
-            this.bunifuFormControlBox1.MaximizeBoxOptions.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuFormControlBox1.MaximizeBoxOptions.BorderRadius = 0;
-            this.bunifuFormControlBox1.MaximizeBoxOptions.Enabled = true;
-            this.bunifuFormControlBox1.MaximizeBoxOptions.EnableDefaultAction = true;
-            this.bunifuFormControlBox1.MaximizeBoxOptions.HoverColor = System.Drawing.Color.LightGray;
-            this.bunifuFormControlBox1.MaximizeBoxOptions.Icon = ((System.Drawing.Image)(resources.GetObject("bunifuFormControlBox1.MaximizeBoxOptions.Icon")));
-            this.bunifuFormControlBox1.MaximizeBoxOptions.IconAlt = ((System.Drawing.Image)(resources.GetObject("bunifuFormControlBox1.MaximizeBoxOptions.IconAlt")));
-            this.bunifuFormControlBox1.MaximizeBoxOptions.IconColor = System.Drawing.Color.Black;
-            this.bunifuFormControlBox1.MaximizeBoxOptions.IconHoverColor = System.Drawing.Color.Black;
-            this.bunifuFormControlBox1.MaximizeBoxOptions.IconPressedColor = System.Drawing.Color.Black;
-            this.bunifuFormControlBox1.MaximizeBoxOptions.IconSize = new System.Drawing.Size(16, 16);
-            this.bunifuFormControlBox1.MaximizeBoxOptions.PressedColor = System.Drawing.Color.Silver;
-            this.bunifuFormControlBox1.MinimizeBox = true;
-            this.bunifuFormControlBox1.MinimizeBoxOptions.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuFormControlBox1.MinimizeBoxOptions.BorderRadius = 0;
-            this.bunifuFormControlBox1.MinimizeBoxOptions.Enabled = true;
-            this.bunifuFormControlBox1.MinimizeBoxOptions.EnableDefaultAction = true;
-            this.bunifuFormControlBox1.MinimizeBoxOptions.HoverColor = System.Drawing.Color.LightGray;
-            this.bunifuFormControlBox1.MinimizeBoxOptions.Icon = ((System.Drawing.Image)(resources.GetObject("bunifuFormControlBox1.MinimizeBoxOptions.Icon")));
-            this.bunifuFormControlBox1.MinimizeBoxOptions.IconAlt = null;
-            this.bunifuFormControlBox1.MinimizeBoxOptions.IconColor = System.Drawing.Color.Black;
-            this.bunifuFormControlBox1.MinimizeBoxOptions.IconHoverColor = System.Drawing.Color.Black;
-            this.bunifuFormControlBox1.MinimizeBoxOptions.IconPressedColor = System.Drawing.Color.Black;
-            this.bunifuFormControlBox1.MinimizeBoxOptions.IconSize = new System.Drawing.Size(14, 14);
-            this.bunifuFormControlBox1.MinimizeBoxOptions.PressedColor = System.Drawing.Color.Silver;
-            this.bunifuFormControlBox1.Name = "bunifuFormControlBox1";
-            this.bunifuFormControlBox1.ShowDesignBorders = false;
-            this.bunifuFormControlBox1.Size = new System.Drawing.Size(102, 24);
-            this.bunifuFormControlBox1.TabIndex = 11;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.BackColor = System.Drawing.Color.PapayaWhip;
-            this.pictureBox4.Image = global::Household_book.Properties.Resources.logo;
-            this.pictureBox4.Location = new System.Drawing.Point(6, 2);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(33, 20);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox4.TabIndex = 12;
-            this.pictureBox4.TabStop = false;
-            // 
             // Authorization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -452,10 +452,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Авторизация";
             this.Load += new System.EventHandler(this.Authorization_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
