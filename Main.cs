@@ -12,6 +12,8 @@ namespace Household_book
 {
     public partial class Main : Form
     {
+        private bool isDragging = false;
+        private Point lastCursorPos;
         public Main()
         {
             InitializeComponent();
@@ -26,6 +28,32 @@ namespace Household_book
         private void bunifuFormControlBox1_HelpClicked(object sender, EventArgs e)
         {
 
+        }
+
+        private void menuStrip1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = true;
+                lastCursorPos = e.Location;
+            }
+        }
+
+        private void menuStrip1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                this.Left += e.X - lastCursorPos.X;
+                this.Top += e.Y - lastCursorPos.Y;
+            }
+        }
+
+        private void menuStrip1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = false;
+            }
         }
     }
 }
