@@ -63,5 +63,10 @@ namespace Household_book
                 isDragging = false;
             }
         }
+
+        private void bunifuImageButton1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
