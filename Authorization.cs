@@ -21,5 +21,10 @@ namespace Household_book
         {
 
         }
+
+        private void bunifuLabel2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
