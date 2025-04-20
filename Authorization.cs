@@ -21,6 +21,7 @@ namespace Household_book
         {
             this.FormBorderStyle = FormBorderStyle.None;
             InitializeComponent();
+          
         }
 
         private void bunifuTextBox1_TextChanged(object sender, EventArgs e)
