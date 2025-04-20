@@ -51,6 +51,7 @@ namespace Household_book
                             Login TEXT NOT NULL UNIQUE,
                             Pass TEXT NOT NULL
                         );
+
                     ");
                     }
                 }
