@@ -14,6 +14,7 @@ namespace Household_book
     {
         private bool isDragging = false;
         private Point lastCursorPos;
+
         public Main()
         {
             InitializeComponent();
@@ -54,6 +55,29 @@ namespace Household_book
             {
                 isDragging = false;
             }
+        }
+
+        private void text_date_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            var textBox = (Bunifu.UI.WinForms.BunifuTextBox)sender;
+
+            // Разрешаем только цифры и Backspace
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != '\b')
+            {
+                e.Handled = true;
+                return;
+            }
+
+            // Автоматическая расстановка точек
+            if (e.KeyChar != '\b' && (textBox.Text.Length == 2 || textBox.Text.Length == 5))
+            {
+                textBox.Text += ".";
+                textBox.SelectionStart = textBox.Text.Length;
+            }
+
+            // Ограничение длины (10 символов)
+            if (textBox.Text.Length >= 10)
+                e.Handled = true;
         }
     }
 }
