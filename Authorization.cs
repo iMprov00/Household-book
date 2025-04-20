@@ -14,6 +14,9 @@ namespace Household_book
 
     public partial class Authorization : Form
     {
+        private string login;
+        private string pass;
+
         private bool isDragging = false;
         private Point lastCursorPos;
 
@@ -21,7 +24,7 @@ namespace Household_book
         {
             this.FormBorderStyle = FormBorderStyle.None;
             InitializeComponent();
-          
+
         }
 
         private void bunifuTextBox1_TextChanged(object sender, EventArgs e)
@@ -68,6 +71,40 @@ namespace Household_book
         private void bunifuImageButton1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button_go_Click(object sender, EventArgs e)
+        {
+
+            login = text_login.Text;
+            pass = text_pass.Text;
+
+            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(pass))
+            {
+                MessageBox.Show(
+                    "Пожалуйста, введите логин и пароль!",  // Текст сообщения
+                    "Ошибка ввода",                         // Заголовок окна
+                    MessageBoxButtons.OK,                   // Кнопка "OK"
+                    MessageBoxIcon.Warning                 // Иконка предупреждения
+                );
+                return;
+            }
+
+            if (login != "1" || pass != "11")
+            {
+                MessageBox.Show(
+                    "Неверный логин или пароль!",  // Текст сообщения
+                    "Ошибка ввода",                         // Заголовок окна
+                    MessageBoxButtons.OK,                   // Кнопка "OK"
+                    MessageBoxIcon.Warning                 // Иконка предупреждения
+                );
+            }
+            else
+            {
+
+                this.Close();
+            }
+            
         }
     }
 }

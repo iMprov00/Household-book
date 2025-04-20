@@ -38,7 +38,6 @@
             Bunifu.UI.WinForms.BunifuTextBox.StateProperties stateProperties6 = new Bunifu.UI.WinForms.BunifuTextBox.StateProperties();
             Bunifu.UI.WinForms.BunifuTextBox.StateProperties stateProperties7 = new Bunifu.UI.WinForms.BunifuTextBox.StateProperties();
             Bunifu.UI.WinForms.BunifuTextBox.StateProperties stateProperties8 = new Bunifu.UI.WinForms.BunifuTextBox.StateProperties();
-            this.label_error = new Bunifu.UI.WinForms.BunifuLabel();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.button_go = new Bunifu.UI.WinForms.BunifuButton.BunifuButton2();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -54,24 +53,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
-            // 
-            // label_error
-            // 
-            this.label_error.AllowParentOverrides = false;
-            this.label_error.AutoEllipsis = false;
-            this.label_error.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label_error.CursorType = System.Windows.Forms.Cursors.Default;
-            this.label_error.Font = new System.Drawing.Font("Century Gothic", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
-            this.label_error.ForeColor = System.Drawing.Color.Red;
-            this.label_error.Location = new System.Drawing.Point(106, 269);
-            this.label_error.Name = "label_error";
-            this.label_error.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label_error.Size = new System.Drawing.Size(233, 21);
-            this.label_error.TabIndex = 6;
-            this.label_error.Text = "Неверный логин или пароль!";
-            this.label_error.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.label_error.TextFormat = Bunifu.UI.WinForms.BunifuLabel.TextFormattingOptions.Default;
-            this.label_error.Visible = false;
             // 
             // pictureBox3
             // 
@@ -130,7 +111,7 @@
             this.button_go.IdleIconLeftImage = null;
             this.button_go.IdleIconRightImage = null;
             this.button_go.IndicateFocus = false;
-            this.button_go.Location = new System.Drawing.Point(147, 296);
+            this.button_go.Location = new System.Drawing.Point(147, 283);
             this.button_go.Name = "button_go";
             this.button_go.OnDisabledState.BorderColor = System.Drawing.Color.Gainsboro;
             this.button_go.OnDisabledState.BorderRadius = 30;
@@ -171,6 +152,7 @@
             this.button_go.TextMarginLeft = 0;
             this.button_go.TextPadding = new System.Windows.Forms.Padding(0);
             this.button_go.UseDefaultRadiusAndThickness = true;
+            this.button_go.Click += new System.EventHandler(this.button_go_Click);
             // 
             // pictureBox2
             // 
@@ -458,7 +440,6 @@
             this.Controls.Add(this.bunifuFormControlBox1);
             this.Controls.Add(this.bunifuLabel2);
             this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.label_error);
             this.Controls.Add(this.button_go);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.text_pass);
@@ -487,7 +468,6 @@
         private Bunifu.UI.WinForms.BunifuTextBox text_pass;
         private System.Windows.Forms.PictureBox pictureBox2;
         private Bunifu.UI.WinForms.BunifuButton.BunifuButton2 button_go;
-        private Bunifu.UI.WinForms.BunifuLabel label_error;
         private System.Windows.Forms.PictureBox pictureBox3;
         private Bunifu.UI.WinForms.BunifuLabel bunifuLabel2;
         private System.Windows.Forms.MenuStrip menuStrip1;
