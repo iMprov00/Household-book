@@ -144,10 +144,12 @@ namespace Household_book
                           "Успешно",
                           MessageBoxIcon.Information);
 
-                
+
                 Main mainForm = new Main();
+
                 mainForm.Show();
                 this.Hide();
+
             }
             else
             {

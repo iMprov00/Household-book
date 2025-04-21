@@ -18,5 +18,7 @@ namespace Household_book
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Authorization());
         }
+
+
     }
 }

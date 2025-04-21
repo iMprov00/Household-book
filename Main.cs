@@ -27,6 +27,7 @@ namespace Household_book
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             LoadPeopleData(); // Загружаем данные при создании формы
+            this.FormClosing += Main_FormClosing;
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -201,6 +202,34 @@ namespace Household_book
 
         }
 
+        private void bunifuFormControlBox1_HelpClicked_1(object sender, EventArgs e)
+        {
+            this.Close();   
+        }
 
+        private void bunifuFormControlBox1_CloseClicked(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Вы точно хотите закрыть программу?", "Подтверждение выхода", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+
+                // Скрыть текущую форму main
+                this.Close();
+            }
+        }
+
+        private void button_exit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var result = MessageBox.Show("Вы точно хотите выйти?", "Подтверждение выхода", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
+        }
     }
 }
