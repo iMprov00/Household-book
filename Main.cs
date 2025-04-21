@@ -12,6 +12,8 @@ using System.Data.SQLite;
 using Dapper;
 using System.IO;
 using static Household_book.Authorization;
+using Bunifu.UI.WinForms;
+using System.Drawing.Drawing2D;
 
 namespace Household_book
 {
@@ -29,7 +31,23 @@ namespace Household_book
 
         private void Main_Load(object sender, EventArgs e)
         {
+            ApplyRoundedCorners(bunifuDataGridView1, 15);
+        }
 
+        private void ApplyRoundedCorners(BunifuDataGridView dgv, int radius)
+        {
+            // Создаем GraphicsPath с закругленными углами
+            GraphicsPath path = new GraphicsPath();
+            Rectangle rect = new Rectangle(0, 0, dgv.Width, dgv.Height);
+
+            path.AddArc(rect.X, rect.Y, radius, radius, 180, 90); // Верхний левый угол
+            path.AddArc(rect.Width - radius, rect.Y, radius, radius, 270, 90); // Верхний правый угол
+            path.AddArc(rect.Width - radius, rect.Height - radius, radius, radius, 0, 90); // Нижний правый угол
+            path.AddArc(rect.X, rect.Height - radius, radius, radius, 90, 90); // Нижний левый угол
+            path.CloseFigure();
+
+            // Применяем регион к DataGridView
+            dgv.Region = new Region(path);
         }
 
         public static class Database_pl
@@ -103,18 +121,19 @@ namespace Household_book
                               MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+
             // Настройка цветов
-            bunifuDataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240); // Цвет четных строк
+            bunifuDataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.PapayaWhip; // Цвет четных строк
             bunifuDataGridView1.RowsDefaultCellStyle.BackColor = Color.White; // Цвет нечетных строк
             bunifuDataGridView1.BackgroundColor = Color.White; // Цвет фона
 
             // Цвет выделенной строки
-            bunifuDataGridView1.RowsDefaultCellStyle.SelectionBackColor = Color.LightGray;
-            bunifuDataGridView1.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.LightGray;
+            bunifuDataGridView1.RowsDefaultCellStyle.SelectionBackColor = Color.DarkGray;
+            bunifuDataGridView1.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.DarkGray;
 
             // Цвет заголовков
-            bunifuDataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(51, 51, 51);
-            bunifuDataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            bunifuDataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Goldenrod;
+            bunifuDataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
 
         }
 
@@ -181,5 +200,7 @@ namespace Household_book
         {
 
         }
+
+
     }
 }
