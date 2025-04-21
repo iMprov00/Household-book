@@ -145,6 +145,7 @@
             this.bunifuFormControlBox1.ShowDesignBorders = false;
             this.bunifuFormControlBox1.Size = new System.Drawing.Size(102, 24);
             this.bunifuFormControlBox1.TabIndex = 11;
+            this.bunifuFormControlBox1.CloseClicked += new System.EventHandler(this.bunifuFormControlBox1_CloseClicked);
             // 
             // pictureBox4
             // 

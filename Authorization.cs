@@ -28,8 +28,18 @@ namespace Household_book
             this.FormBorderStyle = FormBorderStyle.None;
             InitializeComponent();
             Database.Initialize();
+       //     this.FormClosing += Main_FormClosing;
 
         }
+
+/*        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var result = MessageBox.Show("Вы точно хотите выйти?", "Подтверждение выхода", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
+        }*/
 
         public static class Database
         {
@@ -199,6 +209,11 @@ namespace Household_book
         private void ShowMessage(string text, string caption, MessageBoxIcon icon)
         {
             MessageBox.Show(text, caption, MessageBoxButtons.OK, icon);
+        }
+
+        private void bunifuFormControlBox1_CloseClicked(object sender, EventArgs e)
+        {
+            this.Close();   
         }
     }
 }
