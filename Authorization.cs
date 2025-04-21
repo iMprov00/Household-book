@@ -215,5 +215,10 @@ namespace Household_book
         {
             this.Close();   
         }
+
+        private void bunifuProgressBar1_ProgressChanged(object sender, Bunifu.UI.WinForms.BunifuProgressBar.ProgressChangedEventArgs e)
+        {
+
+        }
     }
 }

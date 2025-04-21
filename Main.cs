@@ -64,6 +64,60 @@ namespace Household_book
                 }
             }
 
+            public static bool AddPerson(Person person)
+            {
+                try
+                {
+                    using (var connection = new SQLiteConnection(ConnectionString))
+                    {
+                        connection.Execute(
+                            "INSERT INTO people (full_name, birth_date, address) VALUES (@full_name, @birth_date, @address)",
+                            person);
+                        return true;
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
+            public static bool UpdatePerson(Person person)
+            {
+                try
+                {
+                    using (var connection = new SQLiteConnection(ConnectionString))
+                    {
+                        connection.Execute(
+                            "UPDATE people SET full_name = @full_name, birth_date = @birth_date, address = @address WHERE person_id = @person_id",
+                            person);
+                        return true;
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
+            public static bool DeletePerson(int personId)
+            {
+                try
+                {
+                    using (var connection = new SQLiteConnection(ConnectionString))
+                    {
+                        connection.Execute(
+                            "DELETE FROM people WHERE person_id = @personId",
+                            new { personId });
+                        return true;
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
             public class Person
             {
                 public int person_id { get; set; }
@@ -213,6 +267,15 @@ namespace Household_book
         private void bunifuFormControlBox1_CloseClicked(object sender, EventArgs e)
         {
 
+                DialogResult result = MessageBox.Show("Вы точно хотите выйти?", "Подтверждение выхода",
+                                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    Application.Exit(); // или this.Close();
+                }
+                // Если нет - ничего не делаем, форма не закроется
+            
         }
 
         private async Task AnimateClose()
@@ -291,6 +354,115 @@ namespace Household_book
                 date.Text = selectedRow.Cells["col_date"].Value?.ToString() ?? "";
                 text_adress.Text = selectedRow.Cells["col_address"].Value?.ToString() ?? "";
             }
+        }
+
+        private void bunifuButton21_Click(object sender, EventArgs e)
+        {
+            // Добавление новой записи
+            if (string.IsNullOrEmpty(text_login.Text) || string.IsNullOrEmpty(date.Text) || string.IsNullOrEmpty(text_adress.Text))
+            {
+                MessageBox.Show("Пожалуйста, заполните все поля!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var newPerson = new Database_pl.Person
+            {
+                full_name = text_login.Text,
+                birth_date = date.Text,
+                address = text_adress.Text
+            };
+
+            if (Database_pl.AddPerson(newPerson))
+            {
+                MessageBox.Show("Запись успешно добавлена!", "Успех",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadPeopleData(); // Обновляем данные в таблице
+                ClearFields(); // Очищаем поля
+            }
+            else
+            {
+                MessageBox.Show("Ошибка при добавлении записи!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void bunifuButton22_Click(object sender, EventArgs e)
+        {
+            // Изменение существующей записи
+            if (string.IsNullOrEmpty(text_id.Text))
+            {
+                MessageBox.Show("Не выбрана запись для изменения!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(text_login.Text) || string.IsNullOrEmpty(date.Text) || string.IsNullOrEmpty(text_adress.Text))
+            {
+                MessageBox.Show("Пожалуйста, заполните все поля!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var updatedPerson = new Database_pl.Person
+            {
+                person_id = int.Parse(text_id.Text),
+                full_name = text_login.Text,
+                birth_date = date.Text,
+                address = text_adress.Text
+            };
+
+            if (Database_pl.UpdatePerson(updatedPerson))
+            {
+                MessageBox.Show("Запись успешно обновлена!", "Успех",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadPeopleData(); // Обновляем данные в таблице
+            }
+            else
+            {
+                MessageBox.Show("Ошибка при обновлении записи!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void bunifuButton23_Click(object sender, EventArgs e)
+        {
+            // Удаление записи
+            if (string.IsNullOrEmpty(text_id.Text))
+            {
+                MessageBox.Show("Не выбрана запись для удаления!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var result = MessageBox.Show("Вы уверены, что хотите удалить эту запись?", "Подтверждение",
+                                       MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                int personId = int.Parse(text_id.Text);
+
+                if (Database_pl.DeletePerson(personId))
+                {
+                    MessageBox.Show("Запись успешно удалена!", "Успех",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadPeopleData(); // Обновляем данные в таблице
+                    ClearFields(); // Очищаем поля
+                }
+                else
+                {
+                    MessageBox.Show("Ошибка при удалении записи!", "Ошибка",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void ClearFields()
+        {
+            text_id.Text = "";
+            text_login.Text = "";
+            date.Text = "";
+            text_adress.Text = "";
         }
     }
 }

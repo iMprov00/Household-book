@@ -48,6 +48,7 @@
             this.text_pass = new Bunifu.UI.WinForms.BunifuTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.text_login = new Bunifu.UI.WinForms.BunifuTextBox();
+            this.bunifuProgressBar1 = new Bunifu.UI.WinForms.BunifuProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -431,12 +432,41 @@
             this.text_login.UseSystemPasswordChar = false;
             this.text_login.WordWrap = true;
             // 
+            // bunifuProgressBar1
+            // 
+            this.bunifuProgressBar1.AllowAnimations = false;
+            this.bunifuProgressBar1.Animation = 0;
+            this.bunifuProgressBar1.AnimationSpeed = 220;
+            this.bunifuProgressBar1.AnimationStep = 10;
+            this.bunifuProgressBar1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(223)))), ((int)(((byte)(223)))));
+            this.bunifuProgressBar1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bunifuProgressBar1.BackgroundImage")));
+            this.bunifuProgressBar1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(223)))), ((int)(((byte)(223)))));
+            this.bunifuProgressBar1.BorderRadius = 9;
+            this.bunifuProgressBar1.BorderThickness = 1;
+            this.bunifuProgressBar1.Location = new System.Drawing.Point(16, 268);
+            this.bunifuProgressBar1.Maximum = 100;
+            this.bunifuProgressBar1.MaximumValue = 100;
+            this.bunifuProgressBar1.Minimum = 0;
+            this.bunifuProgressBar1.MinimumValue = 0;
+            this.bunifuProgressBar1.Name = "bunifuProgressBar1";
+            this.bunifuProgressBar1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.bunifuProgressBar1.ProgressBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(223)))), ((int)(((byte)(223)))));
+            this.bunifuProgressBar1.ProgressColorLeft = System.Drawing.Color.SpringGreen;
+            this.bunifuProgressBar1.ProgressColorRight = System.Drawing.Color.SpringGreen;
+            this.bunifuProgressBar1.Size = new System.Drawing.Size(398, 10);
+            this.bunifuProgressBar1.TabIndex = 13;
+            this.bunifuProgressBar1.Value = 0;
+            this.bunifuProgressBar1.ValueByTransition = 0;
+            this.bunifuProgressBar1.Visible = false;
+            this.bunifuProgressBar1.ProgressChanged += new System.EventHandler<Bunifu.UI.WinForms.BunifuProgressBar.ProgressChangedEventArgs>(this.bunifuProgressBar1_ProgressChanged);
+            // 
             // Authorization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Moccasin;
             this.ClientSize = new System.Drawing.Size(429, 352);
+            this.Controls.Add(this.bunifuProgressBar1);
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.bunifuFormControlBox1);
             this.Controls.Add(this.bunifuLabel2);
@@ -474,5 +504,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private Bunifu.UI.WinForms.BunifuFormControlBox bunifuFormControlBox1;
         private System.Windows.Forms.PictureBox pictureBox4;
+        private Bunifu.UI.WinForms.BunifuProgressBar bunifuProgressBar1;
     }
 }
