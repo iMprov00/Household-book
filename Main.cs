@@ -209,17 +209,61 @@ namespace Household_book
 
         private void bunifuFormControlBox1_CloseClicked(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Вы точно хотите закрыть программу?", "Подтверждение выхода", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
 
-                // Скрыть текущую форму main
-                this.Close();
-            }
         }
 
-        private void button_exit_Click(object sender, EventArgs e)
+        private async Task AnimateClose()
         {
+            int duration = 300;
+            int steps = 10;
+            float opacityStep = 1f / steps;
+            int yStep = this.Height / steps;
+
+            for (int i = 0; i < steps; i++)
+            {
+                this.Opacity -= opacityStep;
+                this.Top -= yStep;
+                await Task.Delay(duration / steps);
+            }
+
+            this.Hide();
+        }
+
+        private async Task AnimateShow(Form form)
+        {
+            form.Opacity = 0;
+            form.Show();
+
+            int duration = 300;
+            int steps = 20;
+            float opacityStep = 1f / steps;
+            int yStep = form.Height / steps;
+
+            // Начальная позиция (форма появляется снизу)
+            form.Top += yStep * steps / 2;
+
+            for (int i = 0; i < steps; i++)
+            {
+                form.Opacity += opacityStep;
+                form.Top -= yStep / 2;
+                await Task.Delay(duration / steps);
+            }
+
+            form.Opacity = 1;
+            form.Top = (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2;
+        }
+
+        private async void button_exit_Click(object sender, EventArgs e)
+        {
+
+            var result = MessageBox.Show("Вы точно хотите выйти из текущей учетной записи?", "Подтверждение выхода", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Authorization mainForm = new Authorization();
+                await AnimateClose();
+
+                await AnimateShow(mainForm);
+            }
 
         }
 
