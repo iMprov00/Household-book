@@ -124,7 +124,48 @@ namespace Household_book
 
         }
 
-        private void button_go_Click(object sender, EventArgs e)
+        private async Task AnimateClose()
+        {
+            int duration = 300;
+            int steps = 10;
+            float opacityStep = 1f / steps;
+            int yStep = this.Height / steps;
+
+            for (int i = 0; i < steps; i++)
+            {
+                this.Opacity -= opacityStep;
+                this.Top -= yStep;
+                await Task.Delay(duration / steps);
+            }
+
+            this.Hide();
+        }
+
+        private async Task AnimateShow(Form form)
+        {
+            form.Opacity = 0;
+            form.Show();
+
+            int duration = 300;
+            int steps = 20;
+            float opacityStep = 1f / steps;
+            int yStep = form.Height / steps;
+
+            // Начальная позиция (форма появляется снизу)
+            form.Top += yStep * steps / 2;
+
+            for (int i = 0; i < steps; i++)
+            {
+                form.Opacity += opacityStep;
+                form.Top -= yStep / 2;
+                await Task.Delay(duration / steps);
+            }
+
+            form.Opacity = 1;
+            form.Top = (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2;
+        }
+
+        private async void button_go_Click(object sender, EventArgs e)
         {
 
             login = text_login.Text;
@@ -140,15 +181,11 @@ namespace Household_book
 
             if (Database.ValidateUser(login, pass))
             {
-                ShowMessage("Авторизация успешна!",
-                          "Успешно",
-                          MessageBoxIcon.Information);
-
 
                 Main mainForm = new Main();
+                await AnimateClose();
 
-                mainForm.Show();
-                this.Hide();
+                await AnimateShow(mainForm);
 
             }
             else
