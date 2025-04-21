@@ -80,15 +80,12 @@ namespace Household_book
                 // Получаем данные из БД
                 var people = Database_pl.GetAllPeople().ToList();
 
-                // Настраиваем DataGridView
-                bunifuDataGridView1.AutoGenerateColumns = false;
-                bunifuDataGridView1.DataSource = people;
-
-                // Добавляем колонки, если их нет
+                // Добавляем колонки только если их нет
                 if (bunifuDataGridView1.Columns.Count == 0)
                 {
                     bunifuDataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
                     {
+                        Name = "col_id", // Добавляем Name для обращения
                         DataPropertyName = "person_id",
                         HeaderText = "ID",
                         Width = 50
@@ -96,6 +93,7 @@ namespace Household_book
 
                     bunifuDataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
                     {
+                        Name = "col_name",
                         DataPropertyName = "full_name",
                         HeaderText = "ФИО",
                         Width = 200
@@ -103,6 +101,7 @@ namespace Household_book
 
                     bunifuDataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
                     {
+                        Name = "col_date",
                         DataPropertyName = "birth_date",
                         HeaderText = "Дата рождения",
                         Width = 100
@@ -110,11 +109,15 @@ namespace Household_book
 
                     bunifuDataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
                     {
+                        Name = "col_address",
                         DataPropertyName = "address",
                         HeaderText = "Адрес",
                         Width = 250
                     });
                 }
+
+                // Устанавливаем источник данных
+                bunifuDataGridView1.DataSource = people;
             }
             catch (Exception ex)
             {
@@ -276,6 +279,18 @@ namespace Household_book
             }
         }
 
+        private void bunifuDataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            if (bunifuDataGridView1.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = bunifuDataGridView1.SelectedRows[0];
 
+                // Используем имена колонок, которые задали в LoadPeopleData
+                text_id.Text = selectedRow.Cells["col_id"].Value?.ToString() ?? "";
+                text_login.Text = selectedRow.Cells["col_name"].Value?.ToString() ?? "";
+                date.Text = selectedRow.Cells["col_date"].Value?.ToString() ?? "";
+                text_adress.Text = selectedRow.Cells["col_address"].Value?.ToString() ?? "";
+            }
+        }
     }
 }
