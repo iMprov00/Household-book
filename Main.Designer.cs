@@ -932,7 +932,7 @@
             this.button_add.BackColor1 = System.Drawing.Color.Goldenrod;
             this.button_add.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_add.BackgroundImage")));
             this.button_add.BorderStyle = Bunifu.UI.WinForms.BunifuButton.BunifuButton2.BorderStyles.Solid;
-            this.button_add.ButtonText = "Добавить";
+            this.button_add.ButtonText = "Добавить\r\nжителя";
             this.button_add.ButtonTextMarginLeft = 0;
             this.button_add.ColorContrastOnClick = 45;
             this.button_add.ColorContrastOnHover = 45;

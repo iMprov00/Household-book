@@ -442,25 +442,31 @@ namespace Household_book
                 return;
             }
 
-            var updatedPerson = new Database_pl.Person
+            var result = MessageBox.Show("Вы точно хотите изменить запись?", "Подтверждение изменения", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
-                person_id = int.Parse(text_id.Text),
-                full_name = text_login.Text,
-                birth_date = date.Text,
-                address = text_adress.Text
-            };
+                var updatedPerson = new Database_pl.Person
+                {
+                    person_id = int.Parse(text_id.Text),
+                    full_name = text_login.Text,
+                    birth_date = date.Text,
+                    address = text_adress.Text
+                };
 
-            if (Database_pl.UpdatePerson(updatedPerson))
-            {
-                MessageBox.Show("Запись успешно обновлена!", "Успех",
-                              MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadPeopleData(); // Обновляем данные в таблице
+                if (Database_pl.UpdatePerson(updatedPerson))
+                {
+                    MessageBox.Show("Запись успешно обновлена!", "Успех",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadPeopleData(); // Обновляем данные в таблице
+                }
+                else
+                {
+                    MessageBox.Show("Ошибка при обновлении записи!", "Ошибка",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
-            {
-                MessageBox.Show("Ошибка при обновлении записи!", "Ошибка",
-                              MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
+
         }
 
         private void bunifuButton23_Click(object sender, EventArgs e)

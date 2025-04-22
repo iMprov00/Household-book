@@ -150,7 +150,7 @@
             this.button_add.BackColor1 = System.Drawing.Color.Goldenrod;
             this.button_add.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_add.BackgroundImage")));
             this.button_add.BorderStyle = Bunifu.UI.WinForms.BunifuButton.BunifuButton2.BorderStyles.Solid;
-            this.button_add.ButtonText = "Добавить";
+            this.button_add.ButtonText = "Добавить \r\nжителя";
             this.button_add.ButtonTextMarginLeft = 0;
             this.button_add.ColorContrastOnClick = 45;
             this.button_add.ColorContrastOnHover = 45;
@@ -899,12 +899,12 @@
             this.bunifuLabel4.AutoEllipsis = false;
             this.bunifuLabel4.CursorType = null;
             this.bunifuLabel4.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
-            this.bunifuLabel4.Location = new System.Drawing.Point(752, 105);
+            this.bunifuLabel4.Location = new System.Drawing.Point(745, 105);
             this.bunifuLabel4.Name = "bunifuLabel4";
             this.bunifuLabel4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.bunifuLabel4.Size = new System.Drawing.Size(68, 19);
+            this.bunifuLabel4.Size = new System.Drawing.Size(75, 19);
             this.bunifuLabel4.TabIndex = 30;
-            this.bunifuLabel4.Text = "Гектары";
+            this.bunifuLabel4.Text = "Площадь";
             this.bunifuLabel4.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.bunifuLabel4.TextFormat = Bunifu.UI.WinForms.BunifuLabel.TextFormattingOptions.Default;
             // 
@@ -937,7 +937,7 @@
             this.text_fio.IconRight = null;
             this.text_fio.IconRightCursor = System.Windows.Forms.Cursors.IBeam;
             this.text_fio.Lines = new string[0];
-            this.text_fio.Location = new System.Drawing.Point(53, 98);
+            this.text_fio.Location = new System.Drawing.Point(53, 100);
             this.text_fio.MaxLength = 32767;
             this.text_fio.MinimumSize = new System.Drawing.Size(1, 1);
             this.text_fio.Modified = false;
@@ -1032,7 +1032,7 @@
             this.text_ge.DefaultFont = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.text_ge.DefaultText = "";
             this.text_ge.FillColor = System.Drawing.Color.White;
-            this.text_ge.ForeColor = System.Drawing.Color.DarkGray;
+            this.text_ge.ForeColor = System.Drawing.Color.Black;
             this.text_ge.HideSelection = true;
             this.text_ge.IconLeft = null;
             this.text_ge.IconLeftCursor = System.Windows.Forms.Cursors.IBeam;
@@ -1063,14 +1063,14 @@
             this.text_ge.OnHoverState = stateProperties7;
             stateProperties8.BorderColor = System.Drawing.Color.Silver;
             stateProperties8.FillColor = System.Drawing.Color.White;
-            stateProperties8.ForeColor = System.Drawing.Color.DarkGray;
+            stateProperties8.ForeColor = System.Drawing.Color.Black;
             stateProperties8.PlaceholderForeColor = System.Drawing.Color.Empty;
             this.text_ge.OnIdleState = stateProperties8;
             this.text_ge.Padding = new System.Windows.Forms.Padding(3);
             this.text_ge.PasswordChar = '\0';
-            this.text_ge.PlaceholderForeColor = System.Drawing.Color.Silver;
+            this.text_ge.PlaceholderForeColor = System.Drawing.Color.Black;
             this.text_ge.PlaceholderText = "Ге";
-            this.text_ge.ReadOnly = true;
+            this.text_ge.ReadOnly = false;
             this.text_ge.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.text_ge.SelectedText = "";
             this.text_ge.SelectionLength = 0;
@@ -1357,6 +1357,7 @@
             this.buttond_del.TextMarginLeft = 0;
             this.buttond_del.TextPadding = new System.Windows.Forms.Padding(0);
             this.buttond_del.UseDefaultRadiusAndThickness = true;
+            this.buttond_del.Click += new System.EventHandler(this.buttond_del_Click);
             // 
             // button_ref
             // 
@@ -1446,6 +1447,7 @@
             this.button_ref.TextMarginLeft = 0;
             this.button_ref.TextPadding = new System.Windows.Forms.Padding(0);
             this.button_ref.UseDefaultRadiusAndThickness = true;
+            this.button_ref.Click += new System.EventHandler(this.button_ref_Click);
             // 
             // bunifuLabel6
             // 

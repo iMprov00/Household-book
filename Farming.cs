@@ -93,7 +93,7 @@ namespace Household_book
                     using (var connection = new SQLiteConnection(ConnectionString))
                     {
                         connection.Execute(
-                            "UPDATE farming SET farm_id = @farmId, person_id = @personId, area = @area WHERE rowid = @rowid",
+                            "UPDATE farming SET area = @area WHERE farm_id = @farmId",
                             new { rowid, farmId, personId, area });
                         return true;
                     }
@@ -105,15 +105,15 @@ namespace Household_book
             }
 
             // Удаление записи из farming
-            public static bool DeleteFarm(int rowid)
+            public static bool DeleteFarm(int farmId)
             {
                 try
                 {
                     using (var connection = new SQLiteConnection(ConnectionString))
                     {
                         connection.Execute(
-                            "DELETE FROM farming WHERE rowid = @rowid",
-                            new { rowid });
+                            "DELETE FROM farming WHERE farm_id = @farmId",
+                            new { farmId });
                         return true;
                     }
                 }
@@ -357,5 +357,110 @@ namespace Household_book
                 await AnimateShow(mainForm);
             }
         }
+
+        private void button_ref_Click(object sender, EventArgs e)
+        {
+            // Проверка выбранной записи
+            if (string.IsNullOrEmpty(text_hoz.Text))
+            {
+                MessageBox.Show("Не выбрана запись для изменения!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Проверка заполнения обязательных полей
+            if (string.IsNullOrEmpty(text_id.Text) || string.IsNullOrEmpty(text_ge.Text))
+            {
+                MessageBox.Show("Пожалуйста, заполните все обязательные поля!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Проверка корректности числовых значений
+            if (!int.TryParse(text_id.Text, out int personId))
+            {
+                MessageBox.Show("ID жителя должен быть целым числом!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!double.TryParse(text_ge.Text, out double area))
+            {
+                MessageBox.Show("Площадь должна быть числом!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Подтверждение действия
+            var result = MessageBox.Show("Вы точно хотите изменить запись?", "Подтверждение изменения",
+                                       MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    int farmId = int.Parse(text_hoz.Text);
+
+                    // Обновляем запись (используем farmId как идентификатор)
+                    if (Database_farm.UpdateFarm(0, farmId, personId, area))
+                    {
+                        MessageBox.Show("Запись успешно обновлена!", "Успех",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadFarmsData(); // Обновляем данные в таблице
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ошибка при обновлении записи!", "Ошибка",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при обновлении: {ex.Message}", "Ошибка",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void ClearFields()
+        {
+            text_id.Text = "";
+            text_hoz.Text = "";
+            text_ge.Text = "";
+            text_fio.Text = "";
+        }
+
+        private void buttond_del_Click(object sender, EventArgs e)
+        {
+        /*    // Удаление записи
+            if (string.IsNullOrEmpty(text_id.Text))
+            {
+                MessageBox.Show("Не выбрана запись для удаления!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var result = MessageBox.Show("Вы уверены, что хотите удалить эту запись?", "Подтверждение",
+                                       MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                int personId = int.Parse(text_hoz.Text);
+
+                if (Database_farm.DeleteFarm(farmId))
+                {
+                    MessageBox.Show("Запись успешно удалена!", "Успех",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadFarmsData(); // Обновляем данные в таблице
+                    ClearFields(); // Очищаем поля
+                }
+                else
+                {
+                    MessageBox.Show("Ошибка при удалении записи!", "Ошибка",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }*/
+        }
     }
+    
 }
