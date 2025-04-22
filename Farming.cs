@@ -27,6 +27,17 @@ namespace Household_book
             InitializeComponent();
             LoadFarmsData();
             this.FormBorderStyle = FormBorderStyle.None;
+            this.FormClosing += Farming_FormClosing;
+        }
+
+        private void Farming_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var result = MessageBox.Show("Вы точно хотите выйти?", "Подтверждение выхода", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Environment.Exit(Environment.ExitCode);
+
+            }
         }
 
         public static class Database_farm
@@ -216,9 +227,52 @@ namespace Household_book
 
         }
 
-        private void button_pl_Click(object sender, EventArgs e)
+        private async Task AnimateClose()
         {
+            int duration = 300;
+            int steps = 10;
+            float opacityStep = 1f / steps;
+            int yStep = this.Height / steps;
 
+            for (int i = 0; i < steps; i++)
+            {
+                this.Opacity -= opacityStep;
+                this.Top -= yStep;
+                await Task.Delay(duration / steps);
+            }
+
+            this.Hide();
+        }
+
+        private async Task AnimateShow(Form form)
+        {
+            form.Opacity = 0;
+            form.Show();
+
+            int duration = 300;
+            int steps = 20;
+            float opacityStep = 1f / steps;
+            int yStep = form.Height / steps;
+
+            // Начальная позиция (форма появляется снизу)
+            form.Top += yStep * steps / 2;
+
+            for (int i = 0; i < steps; i++)
+            {
+                form.Opacity += opacityStep;
+                form.Top -= yStep / 2;
+                await Task.Delay(duration / steps);
+            }
+
+            form.Opacity = 1;
+            form.Top = (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2;
+        }
+        private async void button_pl_Click(object sender, EventArgs e)
+        {
+            Main mainForm = new Main();
+            await AnimateClose();
+
+            await AnimateShow(mainForm);
         }
 
         private void bunifuButton21_Click(object sender, EventArgs e)
@@ -233,7 +287,23 @@ namespace Household_book
 
         private void Farming_Load(object sender, EventArgs e)
         {
+            ApplyRoundedCorners(bunifuDataGridView1, 15);
+        }
 
+        private void ApplyRoundedCorners(BunifuDataGridView dgv, int radius)
+        {
+            // Создаем GraphicsPath с закругленными углами
+            GraphicsPath path = new GraphicsPath();
+            Rectangle rect = new Rectangle(0, 0, dgv.Width, dgv.Height);
+
+            path.AddArc(rect.X, rect.Y, radius, radius, 180, 90); // Верхний левый угол
+            path.AddArc(rect.Width - radius, rect.Y, radius, radius, 270, 90); // Верхний правый угол
+            path.AddArc(rect.Width - radius, rect.Height - radius, radius, radius, 0, 90); // Нижний правый угол
+            path.AddArc(rect.X, rect.Height - radius, radius, radius, 90, 90); // Нижний левый угол
+            path.CloseFigure();
+
+            // Применяем регион к DataGridView
+            dgv.Region = new Region(path);
         }
 
         private void menuStrip1_MouseDown(object sender, MouseEventArgs e)
@@ -259,6 +329,32 @@ namespace Household_book
             if (e.Button == MouseButtons.Left)
             {
                 isDragging = false;
+            }
+        }
+
+        private void bunifuDataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            if (bunifuDataGridView1.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = bunifuDataGridView1.SelectedRows[0];
+
+                // Используем имена колонок, которые задали в LoadPeopleData
+                text_hoz.Text = selectedRow.Cells["f_id"].Value?.ToString() ?? "";
+                text_id.Text = selectedRow.Cells["f_pers"].Value?.ToString() ?? "";
+                text_fio.Text = selectedRow.Cells["f_name"].Value?.ToString() ?? "";
+                text_ge.Text = selectedRow.Cells["f_ar"].Value?.ToString() ?? "";
+            }
+        }
+
+        private async void button_exit_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Вы точно хотите выйти из текущей учетной записи?", "Подтверждение выхода", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Authorization mainForm = new Authorization();
+                await AnimateClose();
+
+                await AnimateShow(mainForm);
             }
         }
     }

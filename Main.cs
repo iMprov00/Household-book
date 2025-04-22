@@ -14,6 +14,7 @@ using System.IO;
 using static Household_book.Authorization;
 using Bunifu.UI.WinForms;
 using System.Drawing.Drawing2D;
+using System.Diagnostics;
 
 namespace Household_book
 {
@@ -104,19 +105,56 @@ namespace Household_book
 
             public static bool DeletePerson(int personId)
             {
-                try
+                using (var connection = new SQLiteConnection(ConnectionString))
                 {
-                    using (var connection = new SQLiteConnection(ConnectionString))
+                    connection.Open();
+                    using (var transaction = connection.BeginTransaction())
                     {
-                        connection.Execute(
-                            "DELETE FROM people WHERE person_id = @personId",
-                            new { personId });
-                        return true;
+                        try
+                        {
+                            // 1. Получаем все farm_id, связанные с этим person_id
+                            var farmIds = connection.Query<int>(
+                                "SELECT rowid FROM farming WHERE person_id = @personId",
+                                new { personId },
+                                transaction: transaction).ToList();
+
+                            // 2. Удаляем записи из animals и technic для каждого farm_id
+                            foreach (var farmId in farmIds)
+                            {
+                                connection.Execute(
+                                    "DELETE FROM animals WHERE farm_id = @farmId",
+                                    new { farmId },
+                                    transaction: transaction);
+
+                                connection.Execute(
+                                    "DELETE FROM technic WHERE farm_id = @farmId",
+                                    new { farmId },
+                                    transaction: transaction);
+                            }
+
+                            // 3. Удаляем записи из farming
+                            connection.Execute(
+                                "DELETE FROM farming WHERE person_id = @personId",
+                                new { personId },
+                                transaction: transaction);
+
+                            // 4. Удаляем саму запись из people
+                            connection.Execute(
+                                "DELETE FROM people WHERE person_id = @personId",
+                                new { personId },
+                                transaction: transaction);
+
+                            transaction.Commit();
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            // Логирование ошибки
+                            Debug.WriteLine($"Ошибка при удалении: {ex.Message}");
+                            return false;
+                        }
                     }
-                }
-                catch
-                {
-                    return false;
                 }
             }
 
@@ -534,53 +572,14 @@ namespace Household_book
 
 
 
-        private async Task AnimateClose2()
-        {
-            int duration = 300;
-            int steps = 10;
-            float opacityStep = 1f / steps;
-            int yStep = this.Height / steps;
-
-            for (int i = 0; i < steps; i++)
-            {
-                this.Opacity -= opacityStep;
-                this.Top -= yStep;
-                await Task.Delay(duration / steps);
-            }
-
-            this.Hide();
-        }
-
-        private async Task AnimateShow2(Form form)
-        {
-            form.Opacity = 0;
-            form.Show();
-
-            int duration = 300;
-            int steps = 20;
-            float opacityStep = 1f / steps;
-            int yStep = form.Height / steps;
-
-            // Начальная позиция (форма появляется снизу)
-            form.Top += yStep * steps / 2;
-
-            for (int i = 0; i < steps; i++)
-            {
-                form.Opacity += opacityStep;
-                form.Top -= yStep / 2;
-                await Task.Delay(duration / steps);
-            }
-
-            form.Opacity = 1;
-            form.Top = (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2;
-        }
-
         private async void bunifuButton24_Click(object sender, EventArgs e)
         {
-            Farming mainForm = new Farming();
-            await AnimateClose2();
+           
 
-            await AnimateShow2(mainForm);
+            Farming mainForm = new Farming();
+            await AnimateClose();
+
+            await AnimateShow(mainForm);
 
         }
 
