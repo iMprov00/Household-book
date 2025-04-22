@@ -196,6 +196,7 @@ namespace Household_book
                 await AnimateClose();
 
                 await AnimateShow(mainForm);
+                
 
             }
             else
@@ -213,7 +214,7 @@ namespace Household_book
 
         private void bunifuFormControlBox1_CloseClicked(object sender, EventArgs e)
         {
-            this.Close();   
+            Environment.Exit(Environment.ExitCode);
         }
 
         private void bunifuProgressBar1_ProgressChanged(object sender, Bunifu.UI.WinForms.BunifuProgressBar.ProgressChangedEventArgs e)

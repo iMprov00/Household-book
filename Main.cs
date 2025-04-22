@@ -26,12 +26,14 @@ namespace Household_book
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
-            LoadPeopleData(); // Загружаем данные при создании формы
+           LoadPeopleData(); // Загружаем данные при создании формы
             this.FormClosing += Main_FormClosing;
         }
 
-        private void Main_Load(object sender, EventArgs e)
+        private async void Main_Load(object sender, EventArgs e)
         {
+           
+
             ApplyRoundedCorners(bunifuDataGridView1, 15);
         }
 
@@ -64,7 +66,7 @@ namespace Household_book
                 }
             }
 
-            public static bool AddPerson(Person person)
+/*            public static bool AddPerson(Person person)
             {
                 try
                 {
@@ -80,7 +82,7 @@ namespace Household_book
                 {
                     return false;
                 }
-            }
+            }*/
 
             public static bool UpdatePerson(Person person)
             {
@@ -118,6 +120,8 @@ namespace Household_book
                 }
             }
 
+
+            //-----------------------------------
             public class Person
             {
                 public int person_id { get; set; }
@@ -125,6 +129,29 @@ namespace Household_book
                 public string birth_date { get; set; }
                 public string address { get; set; }
             }
+
+            //-----------------------------------
+            public static IEnumerable<Farming> GetAllFarming()
+            {
+                using (var connection = new SQLiteConnection(ConnectionString))
+                {
+                    return connection.Query<Farming>(
+                        @"SELECT f.rowid, p.full_name, f.area 
+                  FROM farming f
+                  LEFT JOIN people p ON f.person_id = p.person_id");
+                }
+            }
+
+          
+            public class Farming
+            {
+                public int rowid { get; set; }
+                public string full_name { get; set; }
+                public double area { get; set; }
+            }
+
+
+ 
         }
 
         private void LoadPeopleData()
@@ -251,7 +278,8 @@ namespace Household_book
 
         private void button_pl_Click(object sender, EventArgs e)
         {
-            LoadPeopleData();
+            panel_pl1.Visible = true;
+            panel_pl2.Visible = true;
         }
 
         private void bunifuDataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -261,21 +289,21 @@ namespace Household_book
 
         private void bunifuFormControlBox1_HelpClicked_1(object sender, EventArgs e)
         {
-            this.Close();   
+            this.Close();
         }
 
         private void bunifuFormControlBox1_CloseClicked(object sender, EventArgs e)
         {
 
-                DialogResult result = MessageBox.Show("Вы точно хотите выйти?", "Подтверждение выхода",
-                                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Вы точно хотите выйти?", "Подтверждение выхода",
+                                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                if (result == DialogResult.Yes)
-                {
-                    Application.Exit(); // или this.Close();
-                }
-                // Если нет - ничего не делаем, форма не закроется
-            
+            if (result == DialogResult.Yes)
+            {
+                Application.Exit(); // или this.Close();
+            }
+            // Если нет - ничего не делаем, форма не закроется
+
         }
 
         private async Task AnimateClose()
@@ -338,54 +366,26 @@ namespace Household_book
             var result = MessageBox.Show("Вы точно хотите выйти?", "Подтверждение выхода", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                Application.Exit();
+                Environment.Exit(Environment.ExitCode);
+                
             }
         }
 
         private void bunifuDataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            if (bunifuDataGridView1.SelectedRows.Count > 0)
-            {
-                DataGridViewRow selectedRow = bunifuDataGridView1.SelectedRows[0];
+                 if (bunifuDataGridView1.SelectedRows.Count > 0)
+                        {
+                            DataGridViewRow selectedRow = bunifuDataGridView1.SelectedRows[0];
 
-                // Используем имена колонок, которые задали в LoadPeopleData
-                text_id.Text = selectedRow.Cells["col_id"].Value?.ToString() ?? "";
-                text_login.Text = selectedRow.Cells["col_name"].Value?.ToString() ?? "";
-                date.Text = selectedRow.Cells["col_date"].Value?.ToString() ?? "";
-                text_adress.Text = selectedRow.Cells["col_address"].Value?.ToString() ?? "";
-            }
+                            // Используем имена колонок, которые задали в LoadPeopleData
+                            text_id.Text = selectedRow.Cells["col_id"].Value?.ToString() ?? "";
+                            text_login.Text = selectedRow.Cells["col_name"].Value?.ToString() ?? "";
+                            date.Text = selectedRow.Cells["col_date"].Value?.ToString() ?? "";
+                            text_adress.Text = selectedRow.Cells["col_address"].Value?.ToString() ?? "";
+                        }
         }
-
-        private void bunifuButton21_Click(object sender, EventArgs e)
-        {
-            // Добавление новой записи
-            if (string.IsNullOrEmpty(text_login.Text) || string.IsNullOrEmpty(date.Text) || string.IsNullOrEmpty(text_adress.Text))
-            {
-                MessageBox.Show("Пожалуйста, заполните все поля!", "Ошибка",
-                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var newPerson = new Database_pl.Person
-            {
-                full_name = text_login.Text,
-                birth_date = date.Text,
-                address = text_adress.Text
-            };
-
-            if (Database_pl.AddPerson(newPerson))
-            {
-                MessageBox.Show("Запись успешно добавлена!", "Успех",
-                              MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadPeopleData(); // Обновляем данные в таблице
-                ClearFields(); // Очищаем поля
-            }
-            else
-            {
-                MessageBox.Show("Ошибка при добавлении записи!", "Ошибка",
-                              MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        
+        
 
         private void bunifuButton22_Click(object sender, EventArgs e)
         {
@@ -463,6 +463,255 @@ namespace Household_book
             text_login.Text = "";
             date.Text = "";
             text_adress.Text = "";
+        }
+
+        private void bunifuLabel10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuButton21_Click_1(object sender, EventArgs e)
+        {
+
+        }
+        //_________________________________________________________________
+
+
+        private void LoadFarmingData()
+        {
+            try
+            {
+                // Получаем данные из БД
+                var farmingData = Database_pl.GetAllFarming().ToList();
+
+                // Очищаем существующие колонки
+                bunifuDataGridView1.Columns.Clear();
+
+                // Добавляем колонки
+
+                bunifuDataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
+                {
+                    Name = "col_farm_id",
+                    DataPropertyName = "farm_id",
+                    HeaderText = "ID хозяйства",
+                    Width = 100
+                });
+
+                bunifuDataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
+                {
+                    Name = "col_full_name",
+                    DataPropertyName = "full_name",
+                    HeaderText = "ФИО владельца",
+                    Width = 200
+                });
+
+                bunifuDataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
+                {
+                    Name = "col_area",
+                    DataPropertyName = "area",
+                    HeaderText = "Площадь (га)",
+                    Width = 100
+                });
+
+                // Устанавливаем источник данных
+                bunifuDataGridView1.DataSource = farmingData;
+
+                // Настройка цветов (как в LoadPeopleData)
+                bunifuDataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.PapayaWhip;
+                bunifuDataGridView1.RowsDefaultCellStyle.BackColor = Color.White;
+                bunifuDataGridView1.BackgroundColor = Color.White;
+                bunifuDataGridView1.RowsDefaultCellStyle.SelectionBackColor = Color.DarkGray;
+                bunifuDataGridView1.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.DarkGray;
+                bunifuDataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Goldenrod;
+                bunifuDataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+
+        private async Task AnimateClose2()
+        {
+            int duration = 300;
+            int steps = 10;
+            float opacityStep = 1f / steps;
+            int yStep = this.Height / steps;
+
+            for (int i = 0; i < steps; i++)
+            {
+                this.Opacity -= opacityStep;
+                this.Top -= yStep;
+                await Task.Delay(duration / steps);
+            }
+
+            this.Hide();
+        }
+
+        private async Task AnimateShow2(Form form)
+        {
+            form.Opacity = 0;
+            form.Show();
+
+            int duration = 300;
+            int steps = 20;
+            float opacityStep = 1f / steps;
+            int yStep = form.Height / steps;
+
+            // Начальная позиция (форма появляется снизу)
+            form.Top += yStep * steps / 2;
+
+            for (int i = 0; i < steps; i++)
+            {
+                form.Opacity += opacityStep;
+                form.Top -= yStep / 2;
+                await Task.Delay(duration / steps);
+            }
+
+            form.Opacity = 1;
+            form.Top = (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2;
+        }
+
+        private async void bunifuButton24_Click(object sender, EventArgs e)
+        {
+            Farming mainForm = new Farming();
+            await AnimateClose2();
+
+            await AnimateShow2(mainForm);
+
+        }
+
+        private void button_anim_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void bunifuLabel11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuLabel9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuLabel8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuLabel7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuLabel6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void text_id_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void text_adress_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuLabel3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuLabel5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuLabel2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuLabel4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void text_login_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void date_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_add_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuPanel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuPictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_rep_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_ab_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_tech_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel_pl1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bindingSource1_CurrentChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel_pl2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
