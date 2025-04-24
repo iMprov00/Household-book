@@ -15,52 +15,75 @@ using static Household_book.Authorization;
 using Bunifu.UI.WinForms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
+using static Household_book.Animals;
 
 namespace Household_book
 {
-    public partial class Animals : Form
+    public partial class Technic : Form
     {
         private bool isDragging = false;
         private Point lastCursorPos;
-
-        public Animals()
+        public Technic()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
-            this.FormClosing += Animals_FormClosing;
+            this.FormClosing += Technic_FormClosing;
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
-            LoadAnimalsData();
+            LoadTechnicData();
         }
 
-        public static class Database_an
+        private void Technic_Load(object sender, EventArgs e)
+        {
+            ApplyRoundedCorners(bunifuDataGridView1, 15);
+        }
+
+        public static class Database_tech
         {
             private static string DatabaseFile = "household_book.db";
             public static string ConnectionString => $"Data Source={DatabaseFile};Version=3;";
 
-            public class AnimalRecord
+            public class TechnicRecord
             {
-                public int animal_id { get; set; }
+                public int technic_id { get; set; }
                 public int farm_id { get; set; }
-                public string animal_type { get; set; }
+                public string technic_type { get; set; }
                 public int quantity { get; set; }
             }
 
-            public static IEnumerable<AnimalRecord> GetAllAnimals()
+            public static IEnumerable<TechnicRecord> GetAllTechnic()
             {
                 using (var connection = new SQLiteConnection(ConnectionString))
                 {
-                    return connection.Query<AnimalRecord>("SELECT * FROM animals");
+                    return connection.Query<TechnicRecord>("SELECT * FROM technic");
                 }
             }
 
-            public static bool AddAnimal(AnimalRecord animal)
+            public static bool AddTechnic(TechnicRecord technic)
             {
                 try
                 {
                     using (var connection = new SQLiteConnection(ConnectionString))
                     {
                         connection.Execute(
-                            "INSERT INTO animals (farm_id, animal_type, quantity) VALUES (@farm_id, @animal_type, @quantity)",
+                            "INSERT INTO technic (farm_id, technic_type, quantity) VALUES (@farm_id, @technic_type, @quantity)",
+                            technic);
+                        return true;
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
+            public static bool UpdateTechnic(TechnicRecord animal)
+            {
+                try
+                {
+                    using (var connection = new SQLiteConnection(ConnectionString))
+                    {
+                        connection.Execute(
+                            "UPDATE technic SET farm_id = @farm_id, technic_type = @technic_type, quantity = @quantity WHERE technic_id = @technic_id",
                             animal);
                         return true;
                     }
@@ -71,33 +94,15 @@ namespace Household_book
                 }
             }
 
-            public static bool UpdateAnimal(AnimalRecord animal)
+            public static bool DeleteTechnic(int technicId)
             {
                 try
                 {
                     using (var connection = new SQLiteConnection(ConnectionString))
                     {
                         connection.Execute(
-                            "UPDATE animals SET farm_id = @farm_id, animal_type = @animal_type, quantity = @quantity WHERE animal_id = @animal_id",
-                            animal);
-                        return true;
-                    }
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-
-            public static bool DeleteAnimal(int animalId)
-            {
-                try
-                {
-                    using (var connection = new SQLiteConnection(ConnectionString))
-                    {
-                        connection.Execute(
-                            "DELETE FROM animals WHERE animal_id = @animalId",
-                            new { animalId });
+                            "DELETE FROM technic WHERE technic_id = @technicId",
+                            new { technicId });
                         return true;
                     }
                 }
@@ -108,20 +113,20 @@ namespace Household_book
             }
         }
 
-        private void LoadAnimalsData()
+        private void LoadTechnicData()
         {
             try
             {
                 bunifuDataGridView1.SuspendLayout();
 
-                var animals = Database_an.GetAllAnimals().ToList();
+                var technic = Database_tech.GetAllTechnic().ToList();
 
                 if (bunifuDataGridView1.Columns.Count == 0)
                 {
                     AddGridColumns();
                 }
 
-                bunifuDataGridView1.DataSource = animals;
+                bunifuDataGridView1.DataSource = technic;
                 ConfigureGridAppearance();
             }
             catch (Exception ex)
@@ -139,9 +144,9 @@ namespace Household_book
         {
             var columns = new[]
             {
-                new { Name = "col_animal_id", Header = "ID животного", Width = 100, DataProperty = "animal_id" },
+                new { Name = "col_technic_id", Header = "ID техники", Width = 100, DataProperty = "technic_id" },
                 new { Name = "col_farm_id", Header = "ID хозяйства", Width = 100, DataProperty = "farm_id" },
-                new { Name = "col_type", Header = "Тип животного", Width = 200, DataProperty = "animal_type" },
+                new { Name = "col_type", Header = "Тип техники", Width = 200, DataProperty = "technic_type" },
                 new { Name = "col_quantity", Header = "Количество", Width = 100, DataProperty = "quantity" }
             };
 
@@ -166,22 +171,6 @@ namespace Household_book
             bunifuDataGridView1.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.DarkGray;
             bunifuDataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Goldenrod;
             bunifuDataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
-        }
-
-
-        private void bunifuLabel2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void bunifuLabel3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void text_ge_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void menuStrip1_MouseDown(object sender, MouseEventArgs e)
@@ -210,7 +199,7 @@ namespace Household_book
             }
         }
 
-        private void Animals_FormClosing(object sender, FormClosingEventArgs e)
+        private void Technic_FormClosing(object sender, FormClosingEventArgs e)
         {
             var result = MessageBox.Show("Вы точно хотите выйти?", "Подтверждение выхода", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
@@ -219,6 +208,7 @@ namespace Household_book
 
             }
         }
+
 
         private async Task AnimateClose()
         {
@@ -261,11 +251,6 @@ namespace Household_book
             form.Top = (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2;
         }
 
-        private void Animals_Load(object sender, EventArgs e)
-        {
-            
-        }
-
         private void ApplyRoundedCorners(BunifuDataGridView dgv, int radius)
         {
             // Создаем GraphicsPath с закругленными углами
@@ -281,10 +266,6 @@ namespace Household_book
             // Применяем регион к DataGridView
             dgv.Region = new Region(path);
         }
-
-
-
-
 
         private void button_ad_Click(object sender, EventArgs e)
         {
@@ -302,18 +283,18 @@ namespace Household_book
                 return;
             }
 
-            var newAnimal = new Database_an.AnimalRecord
+            var newTech = new Database_tech.TechnicRecord
             {
                 farm_id = farmId,
-                animal_type = text_type.Text,
+                technic_type = text_type.Text,
                 quantity = quantity
             };
 
-            if (Database_an.AddAnimal(newAnimal))
+            if (Database_tech.AddTechnic(newTech))
             {
                 MessageBox.Show("Запись успешно добавлена!", "Успех",
                               MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadAnimalsData();
+                LoadTechnicData();
                 ClearFields();
             }
             else
@@ -343,19 +324,19 @@ namespace Household_book
                                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                var updatedAnimal = new Database_an.AnimalRecord
+                var updatedTech = new Database_tech.TechnicRecord
                 {
-                    animal_id = int.Parse(text_animal.Text),
+                    technic_id = int.Parse(text_animal.Text),
                     farm_id = int.Parse(text_id_hoz.Text),
-                    animal_type = text_type.Text,
+                    technic_type = text_type.Text,
                     quantity = int.Parse(text_kol.Text)
                 };
 
-                if (Database_an.UpdateAnimal(updatedAnimal))
+                if (Database_tech.UpdateTechnic(updatedTech))
                 {
                     MessageBox.Show("Запись успешно обновлена!", "Успех",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadAnimalsData();
+                    LoadTechnicData();
                 }
                 else
                 {
@@ -379,13 +360,13 @@ namespace Household_book
 
             if (result == DialogResult.Yes)
             {
-                int animalId = int.Parse(text_animal.Text);
+                int techId = int.Parse(text_animal.Text);
 
-                if (Database_an.DeleteAnimal(animalId))
+                if (Database_tech.DeleteTechnic(techId))
                 {
                     MessageBox.Show("Запись успешно удалена!", "Успех",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadAnimalsData();
+                    LoadTechnicData();
                     ClearFields();
                 }
                 else
@@ -395,6 +376,7 @@ namespace Household_book
                 }
             }
         }
+
         private void ClearFields()
         {
             text_animal.Text = "";
@@ -405,25 +387,15 @@ namespace Household_book
 
         private void bunifuDataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void bunifuDataGridView1_SelectionChanged_1(object sender, EventArgs e)
-        {
             if (bunifuDataGridView1.SelectedRows.Count > 0)
             {
                 DataGridViewRow selectedRow = bunifuDataGridView1.SelectedRows[0];
 
-                text_animal.Text = selectedRow.Cells["col_animal_id"].Value?.ToString() ?? "";
+                text_animal.Text = selectedRow.Cells["col_technic_id"].Value?.ToString() ?? "";
                 text_id_hoz.Text = selectedRow.Cells["col_farm_id"].Value?.ToString() ?? "";
                 text_type.Text = selectedRow.Cells["col_type"].Value?.ToString() ?? "";
                 text_kol.Text = selectedRow.Cells["col_quantity"].Value?.ToString() ?? "";
             }
-        }
-
-        private void Animals_Load_1(object sender, EventArgs e)
-        {
-            ApplyRoundedCorners(bunifuDataGridView1, 15);
         }
 
         private async void button_pl_Click(object sender, EventArgs e)
@@ -442,9 +414,9 @@ namespace Household_book
             await AnimateShow(mainForm);
         }
 
-        private async void button_tech_Click(object sender, EventArgs e)
+        private async void button_anim_Click(object sender, EventArgs e)
         {
-            Technic mainForm = new Technic();
+            Animals mainForm = new Animals();
             await AnimateClose();
 
             await AnimateShow(mainForm);

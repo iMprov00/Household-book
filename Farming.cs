@@ -195,7 +195,7 @@ namespace Household_book
                     {
                         Name = "f_id", // Добавляем Name для обращения
                         DataPropertyName = "farm_id",
-                        HeaderText = "№ Фермы",
+                        HeaderText = "№ Хозяйства",
                         Width = 50
                     });
 
@@ -718,6 +718,27 @@ namespace Household_book
                     }
                 }
             }
+        }
+
+        private void bunifuButton24_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void button_anim_Click(object sender, EventArgs e)
+        {
+            Animals mainForm = new Animals();
+            await AnimateClose();
+
+            await AnimateShow(mainForm);
+        }
+
+        private async void button_tech_Click(object sender, EventArgs e)
+        {
+            Technic mainForm = new Technic();
+            await AnimateClose();
+
+            await AnimateShow(mainForm);
         }
     }
     

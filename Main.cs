@@ -699,9 +699,12 @@ namespace Household_book
 
         }
 
-        private void button_tech_Click(object sender, EventArgs e)
+        private async void button_tech_Click(object sender, EventArgs e)
         {
+            Technic mainForm = new Technic();
+            await AnimateClose();
 
+            await AnimateShow(mainForm);
         }
 
         private void panel_pl1_Click(object sender, EventArgs e)

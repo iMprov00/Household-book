@@ -974,6 +974,7 @@
             this.bunifuButton24.TextMarginLeft = 0;
             this.bunifuButton24.TextPadding = new System.Windows.Forms.Padding(0);
             this.bunifuButton24.UseDefaultRadiusAndThickness = true;
+            this.bunifuButton24.Click += new System.EventHandler(this.bunifuButton24_Click);
             // 
             // bunifuPictureBox1
             // 
@@ -1257,6 +1258,7 @@
             this.button_exit.TextMarginLeft = 0;
             this.button_exit.TextPadding = new System.Windows.Forms.Padding(0);
             this.button_exit.UseDefaultRadiusAndThickness = true;
+            this.button_exit.Click += new System.EventHandler(this.button_exit_Click);
             // 
             // button_tech
             // 
@@ -1346,6 +1348,7 @@
             this.button_tech.TextMarginLeft = 0;
             this.button_tech.TextPadding = new System.Windows.Forms.Padding(0);
             this.button_tech.UseDefaultRadiusAndThickness = true;
+            this.button_tech.Click += new System.EventHandler(this.button_tech_Click);
             // 
             // button_pl
             // 
@@ -1435,6 +1438,7 @@
             this.button_pl.TextMarginLeft = 0;
             this.button_pl.TextPadding = new System.Windows.Forms.Padding(0);
             this.button_pl.UseDefaultRadiusAndThickness = true;
+            this.button_pl.Click += new System.EventHandler(this.button_pl_Click);
             // 
             // button_anim
             // 
