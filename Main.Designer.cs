@@ -1851,7 +1851,7 @@
             this.bunifuTextBox1.Size = new System.Drawing.Size(207, 32);
             this.bunifuTextBox1.Style = Bunifu.UI.WinForms.BunifuTextBox._Style.Bunifu;
             this.bunifuTextBox1.TabIndex = 38;
-            this.bunifuTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.bunifuTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.bunifuTextBox1.TextMarginBottom = 0;
             this.bunifuTextBox1.TextMarginLeft = 3;
             this.bunifuTextBox1.TextMarginTop = 1;
@@ -1867,7 +1867,7 @@
             this.bunifuLabel12.Cursor = System.Windows.Forms.Cursors.Default;
             this.bunifuLabel12.CursorType = System.Windows.Forms.Cursors.Default;
             this.bunifuLabel12.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
-            this.bunifuLabel12.Location = new System.Drawing.Point(89, 146);
+            this.bunifuLabel12.Location = new System.Drawing.Point(86, 146);
             this.bunifuLabel12.Name = "bunifuLabel12";
             this.bunifuLabel12.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.bunifuLabel12.Size = new System.Drawing.Size(50, 19);

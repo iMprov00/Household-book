@@ -16,6 +16,8 @@ using Bunifu.UI.WinForms;
 using System.Drawing.Drawing2D;
 using static Household_book.Main;
 using System.Diagnostics;
+using static Household_book.Main.Database_pl;
+using static Household_book.Farming.Database_farm;
 
 namespace Household_book
 {
@@ -23,6 +25,7 @@ namespace Household_book
     {
         private bool isDragging = false;
         private Point lastCursorPos;
+        private List<FarmRecord> allPeople = new List<FarmRecord>(); // Поле класса
         public Farming()
         {
             InitializeComponent();
@@ -227,6 +230,8 @@ namespace Household_book
 
                 // Устанавливаем источник данных
                 bunifuDataGridView1.DataSource = people;
+                allPeople = Database_farm.GetAllFarms().ToList();
+                bunifuDataGridView1.DataSource = allPeople; // Первая загрузка
             }
             catch (Exception ex)
             {
@@ -739,6 +744,30 @@ namespace Household_book
             await AnimateClose();
 
             await AnimateShow(mainForm);
+        }
+
+        private void bunifuTextBox1_TextChange(object sender, EventArgs e)
+        {
+            string searchText = bunifuTextBox1.Text.Trim().ToLower();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                bunifuDataGridView1.DataSource = allPeople; // Сброс
+            }
+            else
+            {
+                var filteredPeople = allPeople
+                    .Where(p =>
+                        (p.full_name != null && p.full_name.ToLower().Contains(searchText)) ||
+                        (p.farm_id.ToString().Contains(searchText)) ||
+                        (p.area != null && p.area.ToString().ToLower().Contains(searchText)) || // Дата
+                        (p.person_id.ToString().Contains(searchText)) // Числовое поле (ID)
+                                                                      // Добавьте другие поля по аналогии...
+                    )
+                    .ToList();
+
+                bunifuDataGridView1.DataSource = filteredPeople;
+            }
         }
     }
     

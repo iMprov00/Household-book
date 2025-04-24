@@ -16,6 +16,8 @@ using Bunifu.UI.WinForms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using static Household_book.Animals;
+using static Household_book.Main.Database_pl;
+using static Household_book.Technic.Database_tech;
 
 namespace Household_book
 {
@@ -23,6 +25,7 @@ namespace Household_book
     {
         private bool isDragging = false;
         private Point lastCursorPos;
+        private List<TechnicRecord> allPeople = new List<TechnicRecord>(); // Поле класса
         public Technic()
         {
             InitializeComponent();
@@ -127,6 +130,8 @@ namespace Household_book
                 }
 
                 bunifuDataGridView1.DataSource = technic;
+                allPeople = Database_tech.GetAllTechnic().ToList();
+                bunifuDataGridView1.DataSource = allPeople; // Первая загрузка
                 ConfigureGridAppearance();
             }
             catch (Exception ex)
@@ -431,6 +436,30 @@ namespace Household_book
                 await AnimateClose();
 
                 await AnimateShow(mainForm);
+            }
+        }
+
+        private void bunifuTextBox1_TextChange(object sender, EventArgs e)
+        {
+            string searchText = bunifuTextBox1.Text.Trim().ToLower();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                bunifuDataGridView1.DataSource = allPeople; // Сброс
+            }
+            else
+            {
+                var filteredPeople = allPeople
+                    .Where(p =>
+                        (p.technic_id.ToString().Contains(searchText)) ||
+                        (p.farm_id.ToString().Contains(searchText)) ||
+                        (p.technic_type != null && p.technic_type.ToString().ToLower().Contains(searchText)) || // Дата
+                        (p.quantity.ToString().Contains(searchText)) // Числовое поле (ID)
+                                                                     // Добавьте другие поля по аналогии...
+                    )
+                    .ToList();
+
+                bunifuDataGridView1.DataSource = filteredPeople;
             }
         }
     }
