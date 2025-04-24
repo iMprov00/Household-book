@@ -15,6 +15,7 @@ using static Household_book.Authorization;
 using Bunifu.UI.WinForms;
 using System.Drawing.Drawing2D;
 using static Household_book.Main;
+using System.Diagnostics;
 
 namespace Household_book
 {
@@ -43,7 +44,7 @@ namespace Household_book
         public static class Database_farm
         {
             private static string DatabaseFile = "household_book.db";
-            private static string ConnectionString => $"Data Source={DatabaseFile};Version=3;";
+            public static string ConnectionString => $"Data Source={DatabaseFile};Version=3;";
 
             // Класс для представления записи из таблицы farming
             public class FarmRecord
@@ -107,19 +108,41 @@ namespace Household_book
             // Удаление записи из farming
             public static bool DeleteFarm(int farmId)
             {
-                try
+                using (var connection = new SQLiteConnection(Database_farm.ConnectionString))
                 {
-                    using (var connection = new SQLiteConnection(ConnectionString))
+                    connection.Open();
+                    using (var transaction = connection.BeginTransaction())
                     {
-                        connection.Execute(
-                            "DELETE FROM farming WHERE farm_id = @farmId",
-                            new { farmId });
-                        return true;
+                        try
+                        {
+                            // 1. Удаляем записи из animals для этого farm_id
+                            connection.Execute(
+                                "DELETE FROM animals WHERE farm_id = @farmId",
+                                new { farmId },
+                                transaction: transaction);
+
+                            // 2. Удаляем записи из technic для этого farm_id
+                            connection.Execute(
+                                "DELETE FROM technic WHERE farm_id = @farmId",
+                                new { farmId },
+                                transaction: transaction);
+
+                            // 3. Удаляем саму запись из farming
+                            connection.Execute(
+                                "DELETE FROM farming WHERE farm_id = @farmId",
+                                new { farmId },
+                                transaction: transaction);
+
+                            transaction.Commit();
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            Debug.WriteLine($"Ошибка при удалении хозяйства: {ex.Message}");
+                            return false;
+                        }
                     }
-                }
-                catch
-                {
-                    return false;
                 }
             }
 
@@ -432,39 +455,269 @@ namespace Household_book
 
         private void buttond_del_Click(object sender, EventArgs e)
         {
-        /*    // Удаление записи
-            if (string.IsNullOrEmpty(text_id.Text))
+            // Удаление записи
+            if (string.IsNullOrEmpty(text_hoz.Text))
             {
-                MessageBox.Show("Не выбрана запись для удаления!", "Ошибка",
+                MessageBox.Show("Не выбрано хозяйство для удаления!", "Ошибка",
                               MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var result = MessageBox.Show("Вы уверены, что хотите удалить эту запись?", "Подтверждение",
-                                       MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var result = MessageBox.Show("Вы уверены, что хотите удалить это хозяйство?\nЭто также удалит все связанные записи о животных и технике.",
+                                       "Подтверждение",
+                                       MessageBoxButtons.YesNo,
+                                       MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
             {
-                int personId = int.Parse(text_hoz.Text);
+                int farmId = int.Parse(text_hoz.Text);
 
                 if (Database_farm.DeleteFarm(farmId))
                 {
-                    MessageBox.Show("Запись успешно удалена!", "Успех",
+                    MessageBox.Show("Хозяйство и связанные данные успешно удалены!", "Успех",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadFarmsData(); // Обновляем данные в таблице
                     ClearFields(); // Очищаем поля
                 }
                 else
                 {
-                    MessageBox.Show("Ошибка при удалении записи!", "Ошибка",
+                    MessageBox.Show("Ошибка при удалении хозяйства!", "Ошибка",
                                   MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }*/
+            }
         }
 
         private void button_ad_Click(object sender, EventArgs e)
         {
+            // Проверка заполнения обязательных полей
+            if (string.IsNullOrEmpty(text_id.Text) || string.IsNullOrEmpty(text_ge.Text))
+            {
+                MessageBox.Show("Пожалуйста, заполните ID жителя и площадь!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            // Проверка корректности числовых значений
+            if (!int.TryParse(text_id.Text, out int personId))
+            {
+                MessageBox.Show("ID жителя должен быть целым числом!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!double.TryParse(text_ge.Text, out double area))
+            {
+                MessageBox.Show("Площадь должна быть числом!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Создаем диалог выбора действия
+            var choiceDialog = MessageBox.Show($"Добавить животных/технику к хозяйству \"{text_hoz.Text}\"?",
+                                             "Выбор действия",
+                                             MessageBoxButtons.YesNoCancel,
+                                             MessageBoxIcon.Question);
+
+            if (choiceDialog == DialogResult.Cancel)
+            {
+                return; // Отмена операции
+            }
+
+            if (choiceDialog == DialogResult.No)
+            {
+                // Просто добавляем новую ферму
+                try
+                {
+                    using (var connection = new SQLiteConnection(Database_farm.ConnectionString))
+                    {
+                        connection.Open();
+                        using (var transaction = connection.BeginTransaction())
+                        {
+                            try
+                            {
+                                // Получаем максимальный farm_id и увеличиваем на 1
+                                int maxFarmId = connection.ExecuteScalar<int>(
+                                    "SELECT COALESCE(MAX(farm_id), 0) FROM farming",
+                                    transaction: transaction);
+
+                                int newFarmId = maxFarmId + 1;
+
+                                // Добавляем хозяйство
+                                connection.Execute(
+                                    "INSERT INTO farming (farm_id, person_id, area) VALUES (@farmId, @personId, @area)",
+                                    new { farmId = newFarmId, personId, area },
+                                    transaction: transaction);
+
+                                transaction.Commit();
+
+                                MessageBox.Show("Новое хозяйство успешно добавлено!", "Успех",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                LoadFarmsData();
+                            }
+                            catch (Exception ex)
+                            {
+                                transaction.Rollback();
+                                MessageBox.Show($"Ошибка при добавлении хозяйства: {ex.Message}", "Ошибка",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else if (choiceDialog == DialogResult.Yes)
+            {
+                // Создаем форму для добавления животных/техники
+                Form addForm = new Form()
+                {
+                    Width = 400,
+                    Height = 250,
+                    FormBorderStyle = FormBorderStyle.FixedDialog,
+                    Text = "Добавление животных/техники",
+                    StartPosition = FormStartPosition.CenterParent,
+                    BackColor = Color.Moccasin,
+                    Font = new Font("Century Gothic", 12)
+                };
+
+
+                Label labelCategory = new Label()
+                {
+                    Text = "Категория:",
+                    Left = 20,
+                    Top = 120,
+                    Width = 100,
+                    Height = 30
+                };
+
+                ComboBox comboBoxCategory = new ComboBox()
+                {
+                    Left = 130,
+                    Top = 120,
+                    Width = 240,
+                    DropDownStyle = ComboBoxStyle.DropDownList
+                };
+                comboBoxCategory.Items.AddRange(new string[] { "Техника", "Животные" });
+                comboBoxCategory.SelectedIndex = 0;
+
+                Button confirmation = new Button()
+                {
+                    Text = "Добавить",
+                    Left = 150,
+                    Top = 170,
+                    Width = 150,
+                    Height = 40,
+                    BackColor = Color.Goldenrod,
+                    DialogResult = DialogResult.OK
+                };
+
+                // Элементы формы
+                Label labelType = new Label()
+                {
+                    Text = "Тип:",
+                    Left = 20,
+                    Top = 20,
+                    Width = 100,
+                    Height = 30
+                };
+
+                TextBox textBoxType = new TextBox()
+                {
+                    Left = 130,
+                    Top = 20,
+                    Width = 240
+                    
+                };
+
+                Label labelQuantity = new Label()
+                {
+                    Text = "Количество:",
+                    Left = 20,
+                    Top = 70,
+                    Width = 100,
+                    Height = 30
+                };
+
+                TextBox textBoxQuantity = new TextBox()
+                {
+                    Left = 130,
+                    Top = 70,
+                    Width = 240
+                };
+
+
+                confirmation.Click += (sender2, e2) => { addForm.Close(); };
+
+                addForm.Controls.Add(labelCategory);
+                addForm.Controls.Add(comboBoxCategory);
+                addForm.Controls.Add(labelType);
+                addForm.Controls.Add(textBoxType);
+                addForm.Controls.Add(labelQuantity);
+                addForm.Controls.Add(textBoxQuantity);
+                addForm.Controls.Add(confirmation);
+                addForm.AcceptButton = confirmation;
+
+                if (addForm.ShowDialog() == DialogResult.OK)
+                {
+                    if (string.IsNullOrEmpty(textBoxType.Text) ||
+                        !int.TryParse(textBoxQuantity.Text, out int quantity) ||
+                        quantity <= 0)
+                    {
+                        MessageBox.Show("Пожалуйста, заполните все поля корректно!", "Ошибка",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    int farmId = int.Parse(text_hoz.Text);
+                    string type = textBoxType.Text;
+
+                    try
+                    {
+                        using (var connection = new SQLiteConnection(Database_farm.ConnectionString))
+                        {
+                            connection.Open();
+                            using (var transaction = connection.BeginTransaction())
+                            {
+                                try
+                                {
+                                    if (comboBoxCategory.SelectedItem.ToString() == "Техника")
+                                    {
+                                        connection.Execute(
+                                            "INSERT INTO technic (farm_id, technic_type, quantity) VALUES (@farmId, @type, @quantity)",
+                                            new { farmId, type, quantity },
+                                            transaction: transaction);
+                                    }
+                                    else
+                                    {
+                                        connection.Execute(
+                                            "INSERT INTO animals (farm_id, animal_type, quantity) VALUES (@farmId, @type, @quantity)",
+                                            new { farmId, type, quantity },
+                                            transaction: transaction);
+                                    }
+
+                                    transaction.Commit();
+                                    MessageBox.Show("Данные успешно добавлены!", "Успех",
+                                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                                catch (Exception ex)
+                                {
+                                    transaction.Rollback();
+                                    MessageBox.Show($"Ошибка при добавлении: {ex.Message}", "Ошибка",
+                                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
     }
     

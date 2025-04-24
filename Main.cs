@@ -479,7 +479,7 @@ namespace Household_book
                 return;
             }
 
-            var result = MessageBox.Show("Вы уверены, что хотите удалить эту запись?", "Подтверждение",
+            var result = MessageBox.Show("Вы уверены, что хотите удалить эту запись?\nЭто также удалит все связанные хоязйства, а также записи о животных и технике.", "Подтверждение",
                                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
