@@ -719,6 +719,14 @@ namespace Household_book
                 }
             }
         }
+
+        private async void button_anim_Click(object sender, EventArgs e)
+        {
+            Animals mainForm = new Animals();
+            await AnimateClose();
+
+            await AnimateShow(mainForm);
+        }
     }
     
 }

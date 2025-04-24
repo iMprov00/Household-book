@@ -25,16 +25,16 @@ namespace Household_book
 
         public Main()
         {
-            InitializeComponent();
+
             this.FormBorderStyle = FormBorderStyle.None;
-            LoadPeopleData(); // Загружаем данные при создании формы
+           
             this.FormClosing += Main_FormClosing;
         }
 
         private async void Main_Load(object sender, EventArgs e)
         {
 
-
+            LoadPeopleData(); // Загружаем данные при создании формы
             ApplyRoundedCorners(bunifuDataGridView1, 15);
         }
 
@@ -521,61 +521,7 @@ namespace Household_book
         //_________________________________________________________________
 
 
-        private void LoadFarmingData()
-        {
-            try
-            {
-                // Получаем данные из БД
-                var farmingData = Database_pl.GetAllFarming().ToList();
-
-                // Очищаем существующие колонки
-                bunifuDataGridView1.Columns.Clear();
-
-                // Добавляем колонки
-
-                bunifuDataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
-                {
-                    Name = "col_farm_id",
-                    DataPropertyName = "farm_id",
-                    HeaderText = "ID хозяйства",
-                    Width = 100
-                });
-
-                bunifuDataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
-                {
-                    Name = "col_full_name",
-                    DataPropertyName = "full_name",
-                    HeaderText = "ФИО владельца",
-                    Width = 200
-                });
-
-                bunifuDataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
-                {
-                    Name = "col_area",
-                    DataPropertyName = "area",
-                    HeaderText = "Площадь (га)",
-                    Width = 100
-                });
-
-                // Устанавливаем источник данных
-                bunifuDataGridView1.DataSource = farmingData;
-
-                // Настройка цветов (как в LoadPeopleData)
-                bunifuDataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.PapayaWhip;
-                bunifuDataGridView1.RowsDefaultCellStyle.BackColor = Color.White;
-                bunifuDataGridView1.BackgroundColor = Color.White;
-                bunifuDataGridView1.RowsDefaultCellStyle.SelectionBackColor = Color.DarkGray;
-                bunifuDataGridView1.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.DarkGray;
-                bunifuDataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Goldenrod;
-                bunifuDataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка",
-                              MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
+     
 
 
         private async void bunifuButton24_Click(object sender, EventArgs e)
@@ -589,9 +535,12 @@ namespace Household_book
 
         }
 
-        private void button_anim_Click(object sender, EventArgs e)
+        private async void button_anim_Click(object sender, EventArgs e)
         {
+            Animals mainForm = new Animals();
+            await AnimateClose();
 
+            await AnimateShow(mainForm);
         }
 
         private void bunifuLabel1_Click(object sender, EventArgs e)
