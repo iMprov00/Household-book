@@ -461,6 +461,11 @@ namespace Household_book
                 }
             }*/
         }
+
+        private void button_ad_Click(object sender, EventArgs e)
+        {
+
+        }
     }
     
 }

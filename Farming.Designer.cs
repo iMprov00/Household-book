@@ -1194,7 +1194,7 @@
             this.button_ad.BackColor1 = System.Drawing.Color.Goldenrod;
             this.button_ad.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_ad.BackgroundImage")));
             this.button_ad.BorderStyle = Bunifu.UI.WinForms.BunifuButton.BunifuButton2.BorderStyles.Solid;
-            this.button_ad.ButtonText = "Добавить технику/животных";
+            this.button_ad.ButtonText = "Добавить";
             this.button_ad.ButtonTextMarginLeft = 0;
             this.button_ad.ColorContrastOnClick = 45;
             this.button_ad.ColorContrastOnHover = 45;
@@ -1227,7 +1227,7 @@
             this.button_ad.IdleIconLeftImage = global::Household_book.Properties.Resources.add1;
             this.button_ad.IdleIconRightImage = null;
             this.button_ad.IndicateFocus = false;
-            this.button_ad.Location = new System.Drawing.Point(214, 33);
+            this.button_ad.Location = new System.Drawing.Point(273, 33);
             this.button_ad.Name = "button_ad";
             this.button_ad.OnDisabledState.BorderColor = System.Drawing.Color.Gainsboro;
             this.button_ad.OnDisabledState.BorderRadius = 30;
@@ -1261,13 +1261,14 @@
             this.button_ad.OnPressedState.ForeColor = System.Drawing.Color.White;
             this.button_ad.OnPressedState.IconLeftImage = null;
             this.button_ad.OnPressedState.IconRightImage = null;
-            this.button_ad.Size = new System.Drawing.Size(314, 42);
+            this.button_ad.Size = new System.Drawing.Size(166, 42);
             this.button_ad.TabIndex = 37;
             this.button_ad.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.button_ad.TextAlignment = System.Windows.Forms.HorizontalAlignment.Center;
             this.button_ad.TextMarginLeft = 0;
             this.button_ad.TextPadding = new System.Windows.Forms.Padding(0);
             this.button_ad.UseDefaultRadiusAndThickness = true;
+            this.button_ad.Click += new System.EventHandler(this.button_ad_Click);
             // 
             // buttond_del
             // 
@@ -1406,7 +1407,7 @@
             this.button_ref.IdleIconLeftImage = global::Household_book.Properties.Resources.modif;
             this.button_ref.IdleIconRightImage = null;
             this.button_ref.IndicateFocus = false;
-            this.button_ref.Location = new System.Drawing.Point(534, 33);
+            this.button_ref.Location = new System.Drawing.Point(492, 33);
             this.button_ref.Name = "button_ref";
             this.button_ref.OnDisabledState.BorderColor = System.Drawing.Color.Gainsboro;
             this.button_ref.OnDisabledState.BorderRadius = 30;

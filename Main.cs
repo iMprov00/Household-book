@@ -27,13 +27,13 @@ namespace Household_book
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
-           LoadPeopleData(); // Загружаем данные при создании формы
+            LoadPeopleData(); // Загружаем данные при создании формы
             this.FormClosing += Main_FormClosing;
         }
 
         private async void Main_Load(object sender, EventArgs e)
         {
-           
+
 
             ApplyRoundedCorners(bunifuDataGridView1, 15);
         }
@@ -57,7 +57,7 @@ namespace Household_book
         public static class Database_pl
         {
             private static string DatabaseFile = "household_book.db";
-            private static string ConnectionString => $"Data Source={DatabaseFile};Version=3;";
+            public static string ConnectionString => $"Data Source={DatabaseFile};Version=3;";
 
             public static IEnumerable<Person> GetAllPeople()
             {
@@ -67,7 +67,7 @@ namespace Household_book
                 }
             }
 
-/*            public static bool AddPerson(Person person)
+            public static bool AddPerson(Person person)
             {
                 try
                 {
@@ -83,7 +83,7 @@ namespace Household_book
                 {
                     return false;
                 }
-            }*/
+            }
 
             public static bool UpdatePerson(Person person)
             {
@@ -180,7 +180,7 @@ namespace Household_book
                 }
             }
 
-          
+
             public class Farming
             {
                 public int rowid { get; set; }
@@ -189,7 +189,7 @@ namespace Household_book
             }
 
 
- 
+
         }
 
         private void LoadPeopleData()
@@ -405,25 +405,25 @@ namespace Household_book
             if (result == DialogResult.Yes)
             {
                 Environment.Exit(Environment.ExitCode);
-                
+
             }
         }
 
         private void bunifuDataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-                 if (bunifuDataGridView1.SelectedRows.Count > 0)
-                        {
-                            DataGridViewRow selectedRow = bunifuDataGridView1.SelectedRows[0];
+            if (bunifuDataGridView1.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = bunifuDataGridView1.SelectedRows[0];
 
-                            // Используем имена колонок, которые задали в LoadPeopleData
-                            text_id.Text = selectedRow.Cells["col_id"].Value?.ToString() ?? "";
-                            text_login.Text = selectedRow.Cells["col_name"].Value?.ToString() ?? "";
-                            date.Text = selectedRow.Cells["col_date"].Value?.ToString() ?? "";
-                            text_adress.Text = selectedRow.Cells["col_address"].Value?.ToString() ?? "";
-                        }
+                // Используем имена колонок, которые задали в LoadPeopleData
+                text_id.Text = selectedRow.Cells["col_id"].Value?.ToString() ?? "";
+                text_login.Text = selectedRow.Cells["col_name"].Value?.ToString() ?? "";
+                date.Text = selectedRow.Cells["col_date"].Value?.ToString() ?? "";
+                text_adress.Text = selectedRow.Cells["col_address"].Value?.ToString() ?? "";
+            }
         }
-        
-        
+
+
 
         private void bunifuButton22_Click(object sender, EventArgs e)
         {
@@ -580,7 +580,7 @@ namespace Household_book
 
         private async void bunifuButton24_Click(object sender, EventArgs e)
         {
-           
+
 
             Farming mainForm = new Farming();
             await AnimateClose();
@@ -717,6 +717,108 @@ namespace Household_book
         private void panel_pl2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void bunifuButton22_Click_1(object sender, EventArgs e)
+        {
+            // Добавление новой записи
+            if (string.IsNullOrEmpty(text_login.Text) || string.IsNullOrEmpty(date.Text) || string.IsNullOrEmpty(text_adress.Text))
+            {
+                MessageBox.Show("Пожалуйста, заполните все поля!", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Создаем форму для ввода площади хозяйства
+            Form inputForm = new Form()
+            {
+                Width = 300,
+                Height = 200,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                Text = "Добавление подсобного хозяйства",
+                StartPosition = FormStartPosition.CenterParent,
+                BackColor = Color.Moccasin,
+                Font = new Font("Century Gothic", 12)
+            };
+
+            Label label = new Label()
+            {
+                Text = "Добавьте подсобное хозяйство.\nУкажите площадь (га):",
+                Left = 20,
+                Top = 20,
+                Width = 360,  // Увеличили ширину Label
+                Height = 40,  // Увеличили высоту для двух строк текста
+                TextAlign = ContentAlignment.MiddleLeft  // Выравнивание текста
+            };
+            TextBox textBoxArea = new TextBox() { Left = 10, Top = 70, Width = 260 };
+            Button confirmation = new Button() { Text = "Добавить", Left = 70, Top = 100, Width = 150, Height = 40, BackColor = Color.Goldenrod, DialogResult = DialogResult.OK };
+
+            confirmation.Click += (sender2, e2) => { inputForm.Close(); };
+
+            inputForm.Controls.Add(label);
+            inputForm.Controls.Add(textBoxArea);
+            inputForm.Controls.Add(confirmation);
+            inputForm.AcceptButton = confirmation;
+
+            // Показываем форму и проверяем результат
+            if (inputForm.ShowDialog() == DialogResult.OK)
+            {
+                if (string.IsNullOrEmpty(textBoxArea.Text) || !double.TryParse(textBoxArea.Text, out double area))
+                {
+                    MessageBox.Show("Пожалуйста, введите корректную площадь!", "Ошибка",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                    // Сначала добавляем человека
+                    var newPerson = new Database_pl.Person
+                    {
+                        full_name = text_login.Text,
+                        birth_date = date.Text,
+                        address = text_adress.Text
+                    };
+
+                    using (var connection = new SQLiteConnection(Database_pl.ConnectionString))
+                    {
+                        connection.Open();
+                        using (var transaction = connection.BeginTransaction())
+                        {
+                            try
+                            {
+                                // Добавляем человека и получаем его ID
+                                connection.Execute(
+                                    "INSERT INTO people (full_name, birth_date, address) VALUES (@full_name, @birth_date, @address)",
+                                    newPerson, transaction: transaction);
+
+                                int personId = connection.ExecuteScalar<int>("SELECT last_insert_rowid()", transaction: transaction);
+
+                                // Добавляем хозяйство
+                                connection.Execute(
+                                    "INSERT INTO farming (person_id, area) VALUES (@personId, @area)",
+                                    new { personId, area }, transaction: transaction);
+
+                                transaction.Commit();
+
+                                MessageBox.Show("Запись успешно добавлена!", "Успех",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                LoadPeopleData(); // Обновляем данные в таблице
+                                ClearFields(); // Очищаем поля
+                            }
+                            catch (Exception ex)
+                            {
+                                transaction.Rollback();
+                                MessageBox.Show($"Ошибка при добавлении записи: {ex.Message}", "Ошибка",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                
+            }
+            else
+            {
+                MessageBox.Show("Добавление записи отменено", "Информация",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
