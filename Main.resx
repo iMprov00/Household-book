@@ -418,6 +418,27 @@
         0ugAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="bunifuLabel12.BaseStylesheet" xml:space="preserve">
+    <value>#bunifu-label { padding: 0px; font-family: 'Century Gothic'; font-size: 12pt; width: 100%; height: 100%; font-style: normal; font-weight: bold; text-decoration: none; color: rgb(0, 0, 0); text-align: left; }</value>
+  </data>
+  <data name="bunifuTextBox1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAM8AAAAgCAYAAAC1kywIAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALYSURBVHhe7dyxr9JQFAbwjm90ZHR0dHyj45uMi4mjo/Ev
+        cHRwMHFzcHBz9h9wEmgLBUJ4EBIkJi1pCKl5QCoSRGxIPR8cQx60gPFpAny/5A4v5ZXlfDn33l5qENF/
+        ks1mz2U8LxQKjoxLy7L6uVwu5uA4pIG6Rf1ioJ5lXGiJ3yy58S35kremaY4qlUrY6XTi4XAYh2EYT6fT
+        mOjQoG5Rvxio51qtFubz+ci27fdS77e19P+OJPSl3DD0fT+azWb61UTHZz6fx0EQxMViMUSzkBCdaQz+
+        jHabsuu60yiK9PZExw8hQrOQ+v8sOchoJPaDtuU4zqfBYMBWQydrPB6jCwWSh7saje3QcRAc/CPRqcNS
+        RfJwhYaiEUmHqRo7DtHKZDJBB/LQWDQmmyQ4rz3P4/YZ0ZogCH5KgD5oVK6TVGVs2x5hsUREm0ql0tfE
+        9Q+25rDDoJ8jojX9fj+WnHzUyCxJms5M0/zGLWmi7SzLmmCWptFZhOcCT1j1OhGlaLfbCM8Tjc7iFMGb
+        brerl4kozcbUTf5wcFaNiLbDtrU0m55GZ9F5rvhQlGg37Avk8/nvGh3DwB9IFBFth0c5OH2t0VlM2y5x
+        NJuItsNPGWSm1tfoGIZt2+96vZ5eJqI02BvAHoFGZ7FV/bjVanHRQ7SD53mRTNteaHSWJ6lN0/yh14ko
+        ReIRHexdYw+biJJhR1qWOJ5GZgVpQqr0c0S0ptFooOs80Mhcx+5DlCy16/wmqco4juPzjThEK3gwWi6X
+        v0g+7mhUkun0bcDf9RAt1ev1oWVZDzUi20l7uo8A8VVTdMrQcRAcWc481WjsBx0Ibw7hyQM6RVjjYKq2
+        d8dZhzUQju5Uq9WQB0fpFGC932w2R9gc2LnG2Yfc5B5uJp1o5LpuhG7ENREdC9Sz7/sxXiWNc2tS74+0
+        9G8OkijjGboRTpYmvUCbg+PQBurZNM1XUtvnWupE9O8Yxi/bWIapfehnfAAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="bunifuButton24.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAM8AAAAzCAYAAAAw0Vw9AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8

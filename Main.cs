@@ -15,13 +15,16 @@ using static Household_book.Authorization;
 using Bunifu.UI.WinForms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
+using static Household_book.Main.Database_pl;
 
 namespace Household_book
 {
     public partial class Main : Form
     {
+        private BindingSource bindingSource = new BindingSource(); 
         private bool isDragging = false;
         private Point lastCursorPos;
+        private List<Person> allPeople = new List<Person>(); // Поле класса
 
         public Main()
         {
@@ -234,9 +237,11 @@ namespace Household_book
                         Width = 250
                     });
                 }
+                bunifuDataGridView1.DataSource = bindingSource;
+                bindingSource.DataSource = people;
+                allPeople = Database_pl.GetAllPeople().ToList();
+                bunifuDataGridView1.DataSource = allPeople; // Первая загрузка
 
-                // Устанавливаем источник данных
-                bunifuDataGridView1.DataSource = people;
             }
             catch (Exception ex)
             {
@@ -826,6 +831,40 @@ namespace Household_book
             {
                 MessageBox.Show("Добавление записи отменено", "Информация",
                               MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void text_login_TextChange(object sender, EventArgs e)
+        {
+
+
+        }
+
+        private void bunifuTextBox1_TextChange(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuTextBox1_TextChange_1(object sender, EventArgs e)
+        {
+            string searchText = bunifuTextBox1.Text.Trim().ToLower();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                bunifuDataGridView1.DataSource = allPeople; // Сброс
+            }
+            else
+            {
+                var filteredPeople = allPeople
+                    .Where(p => p.full_name.ToLower().Contains(searchText))
+                    .ToList();
+
+                bunifuDataGridView1.DataSource = filteredPeople;
             }
         }
     }
