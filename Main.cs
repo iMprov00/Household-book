@@ -861,7 +861,13 @@ namespace Household_book
             else
             {
                 var filteredPeople = allPeople
-                    .Where(p => p.full_name.ToLower().Contains(searchText))
+                    .Where(p =>
+                        (p.full_name != null && p.full_name.ToLower().Contains(searchText)) ||
+                        (p.address != null && p.address.ToLower().Contains(searchText)) ||
+                        (p.birth_date != null && p.birth_date.ToString().ToLower().Contains(searchText)) || // Дата
+                        (p.person_id.ToString().Contains(searchText)) // Числовое поле (ID)
+                                                                      // Добавьте другие поля по аналогии...
+                    )
                     .ToList();
 
                 bunifuDataGridView1.DataSource = filteredPeople;
