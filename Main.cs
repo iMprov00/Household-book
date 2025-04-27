@@ -694,9 +694,12 @@ namespace Household_book
 
         }
 
-        private void button_rep_Click(object sender, EventArgs e)
+        private async void button_rep_Click(object sender, EventArgs e)
         {
+            Report mainForm = new Report();
+            await AnimateClose();
 
+            await AnimateShow(mainForm);
         }
 
         private void button_ab_Click(object sender, EventArgs e)

@@ -146,7 +146,7 @@ namespace Household_book
             var columns = new[]
             {
                 new { Name = "col_animal_id", Header = "ID животного", Width = 100, DataProperty = "animal_id" },
-                new { Name = "col_farm_id", Header = "ID хозяйства", Width = 100, DataProperty = "farm_id" },
+                new { Name = "col_farm_id", Header = "№ хозяйства", Width = 100, DataProperty = "farm_id" },
                 new { Name = "col_type", Header = "Тип животного", Width = 200, DataProperty = "animal_type" },
                 new { Name = "col_quantity", Header = "Количество", Width = 100, DataProperty = "quantity" }
             };
