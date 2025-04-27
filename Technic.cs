@@ -462,5 +462,13 @@ namespace Household_book
                 bunifuDataGridView1.DataSource = filteredPeople;
             }
         }
+
+        private async void button_rep_Click(object sender, EventArgs e)
+        {
+            Report mainForm = new Report();
+            await AnimateClose();
+
+            await AnimateShow(mainForm);
+        }
     }
 }

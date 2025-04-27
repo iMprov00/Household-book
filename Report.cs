@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using OfficeOpenXml;
 using System.Data.SQLite;
-using System.IO;
 using Bunifu.UI.WinForms;
 using ClosedXML.Excel;
 using Dapper;
 using System.Collections.Generic;
 using System.Linq;
+
+using System.Threading.Tasks;
+
+
 
 using static Household_book.Farming.Database_farm;
 
@@ -30,6 +32,47 @@ namespace Household_book
             this.FormClosing += Report_FormClosing;
             LoadFarmsData();
 
+        }
+
+        private async Task AnimateClose()
+        {
+            int duration = 300;
+            int steps = 10;
+            float opacityStep = 1f / steps;
+            int yStep = this.Height / steps;
+
+            for (int i = 0; i < steps; i++)
+            {
+                this.Opacity -= opacityStep;
+                this.Top -= yStep;
+                await Task.Delay(duration / steps);
+            }
+
+            this.Hide();
+        }
+
+        private async Task AnimateShow(Form form)
+        {
+            form.Opacity = 0;
+            form.Show();
+
+            int duration = 300;
+            int steps = 20;
+            float opacityStep = 1f / steps;
+            int yStep = form.Height / steps;
+
+            // Начальная позиция (форма появляется снизу)
+            form.Top += yStep * steps / 2;
+
+            for (int i = 0; i < steps; i++)
+            {
+                form.Opacity += opacityStep;
+                form.Top -= yStep / 2;
+                await Task.Delay(duration / steps);
+            }
+
+            form.Opacity = 1;
+            form.Top = (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2;
         }
 
         private void Report_Load(object sender, EventArgs e)
@@ -613,6 +656,53 @@ namespace Household_book
             public string address { get; set; }
         }
 
+        private void button_rep_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+
+        private async void button_pl_Click(object sender, EventArgs e)
+        {
+            Main mainForm = new Main();
+            await AnimateClose();
+
+            await AnimateShow(mainForm);
+        }
+
+        private async void bunifuButton24_Click(object sender, EventArgs e)
+        {
+            Farming mainForm = new Farming();
+            await AnimateClose();
+
+            await AnimateShow(mainForm);
+        }
+
+        private async void button_anim_Click(object sender, EventArgs e)
+        {
+            Animals mainForm = new Animals();
+            await AnimateClose();
+
+            await AnimateShow(mainForm);
+        }
+
+        private async void button_tech_Click(object sender, EventArgs e)
+        {
+            Technic mainForm = new Technic();
+            await AnimateClose();
+
+            await AnimateShow(mainForm);
+        }
+
+        private async void button_exit_Click(object sender, EventArgs e)
+        {
+            Authorization mainForm = new Authorization();
+            await AnimateClose();
+
+            await AnimateShow(mainForm);
+        }
     }
     
 }

@@ -90,10 +90,10 @@
             this.bunifuLabel1 = new Bunifu.UI.WinForms.BunifuLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.bunifuPanel1 = new Bunifu.UI.WinForms.BunifuPanel();
-            this.bunifuLabel2 = new Bunifu.UI.WinForms.BunifuLabel();
-            this.panel_pl1 = new Bunifu.UI.WinForms.BunifuPanel();
             this.bunifuLabel12 = new Bunifu.UI.WinForms.BunifuLabel();
             this.bunifuTextBox1 = new Bunifu.UI.WinForms.BunifuTextBox();
+            this.bunifuLabel2 = new Bunifu.UI.WinForms.BunifuLabel();
+            this.panel_pl1 = new Bunifu.UI.WinForms.BunifuPanel();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bunifuPictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -359,6 +359,7 @@
             this.button_rep.TextMarginLeft = 0;
             this.button_rep.TextPadding = new System.Windows.Forms.Padding(0);
             this.button_rep.UseDefaultRadiusAndThickness = true;
+            this.button_rep.Click += new System.EventHandler(this.button_rep_Click);
             // 
             // button_ab
             // 
@@ -1591,48 +1592,6 @@
             this.bunifuPanel1.Size = new System.Drawing.Size(225, 678);
             this.bunifuPanel1.TabIndex = 63;
             // 
-            // bunifuLabel2
-            // 
-            this.bunifuLabel2.AllowParentOverrides = false;
-            this.bunifuLabel2.AutoEllipsis = false;
-            this.bunifuLabel2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.bunifuLabel2.CursorType = System.Windows.Forms.Cursors.Default;
-            this.bunifuLabel2.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold);
-            this.bunifuLabel2.Location = new System.Drawing.Point(14, 11);
-            this.bunifuLabel2.Name = "bunifuLabel2";
-            this.bunifuLabel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.bunifuLabel2.Size = new System.Drawing.Size(133, 39);
-            this.bunifuLabel2.TabIndex = 0;
-            this.bunifuLabel2.Text = "Техника";
-            this.bunifuLabel2.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.bunifuLabel2.TextFormat = Bunifu.UI.WinForms.BunifuLabel.TextFormattingOptions.Default;
-            // 
-            // panel_pl1
-            // 
-            this.panel_pl1.BackgroundColor = System.Drawing.Color.Transparent;
-            this.panel_pl1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel_pl1.BackgroundImage")));
-            this.panel_pl1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel_pl1.BorderColor = System.Drawing.Color.Black;
-            this.panel_pl1.BorderRadius = 30;
-            this.panel_pl1.BorderThickness = 1;
-            this.panel_pl1.Controls.Add(this.text_kol);
-            this.panel_pl1.Controls.Add(this.text_animal);
-            this.panel_pl1.Controls.Add(this.bunifuLabel5);
-            this.panel_pl1.Controls.Add(this.button_ad);
-            this.panel_pl1.Controls.Add(this.buttond_del);
-            this.panel_pl1.Controls.Add(this.button_ref);
-            this.panel_pl1.Controls.Add(this.bunifuLabel6);
-            this.panel_pl1.Controls.Add(this.text_id_hoz);
-            this.panel_pl1.Controls.Add(this.bunifuLabel3);
-            this.panel_pl1.Controls.Add(this.bunifuLabel2);
-            this.panel_pl1.Controls.Add(this.bunifuLabel4);
-            this.panel_pl1.Controls.Add(this.text_type);
-            this.panel_pl1.Location = new System.Drawing.Point(236, 31);
-            this.panel_pl1.Name = "panel_pl1";
-            this.panel_pl1.ShowBorders = true;
-            this.panel_pl1.Size = new System.Drawing.Size(890, 149);
-            this.panel_pl1.TabIndex = 64;
-            // 
             // bunifuLabel12
             // 
             this.bunifuLabel12.AllowParentOverrides = false;
@@ -1725,6 +1684,48 @@
             this.bunifuTextBox1.UseSystemPasswordChar = false;
             this.bunifuTextBox1.WordWrap = true;
             this.bunifuTextBox1.TextChange += new System.EventHandler(this.bunifuTextBox1_TextChange);
+            // 
+            // bunifuLabel2
+            // 
+            this.bunifuLabel2.AllowParentOverrides = false;
+            this.bunifuLabel2.AutoEllipsis = false;
+            this.bunifuLabel2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.bunifuLabel2.CursorType = System.Windows.Forms.Cursors.Default;
+            this.bunifuLabel2.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold);
+            this.bunifuLabel2.Location = new System.Drawing.Point(14, 11);
+            this.bunifuLabel2.Name = "bunifuLabel2";
+            this.bunifuLabel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.bunifuLabel2.Size = new System.Drawing.Size(133, 39);
+            this.bunifuLabel2.TabIndex = 0;
+            this.bunifuLabel2.Text = "Техника";
+            this.bunifuLabel2.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
+            this.bunifuLabel2.TextFormat = Bunifu.UI.WinForms.BunifuLabel.TextFormattingOptions.Default;
+            // 
+            // panel_pl1
+            // 
+            this.panel_pl1.BackgroundColor = System.Drawing.Color.Transparent;
+            this.panel_pl1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel_pl1.BackgroundImage")));
+            this.panel_pl1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel_pl1.BorderColor = System.Drawing.Color.Black;
+            this.panel_pl1.BorderRadius = 30;
+            this.panel_pl1.BorderThickness = 1;
+            this.panel_pl1.Controls.Add(this.text_kol);
+            this.panel_pl1.Controls.Add(this.text_animal);
+            this.panel_pl1.Controls.Add(this.bunifuLabel5);
+            this.panel_pl1.Controls.Add(this.button_ad);
+            this.panel_pl1.Controls.Add(this.buttond_del);
+            this.panel_pl1.Controls.Add(this.button_ref);
+            this.panel_pl1.Controls.Add(this.bunifuLabel6);
+            this.panel_pl1.Controls.Add(this.text_id_hoz);
+            this.panel_pl1.Controls.Add(this.bunifuLabel3);
+            this.panel_pl1.Controls.Add(this.bunifuLabel2);
+            this.panel_pl1.Controls.Add(this.bunifuLabel4);
+            this.panel_pl1.Controls.Add(this.text_type);
+            this.panel_pl1.Location = new System.Drawing.Point(236, 31);
+            this.panel_pl1.Name = "panel_pl1";
+            this.panel_pl1.ShowBorders = true;
+            this.panel_pl1.Size = new System.Drawing.Size(890, 149);
+            this.panel_pl1.TabIndex = 64;
             // 
             // Technic
             // 
